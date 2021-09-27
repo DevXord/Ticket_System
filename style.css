@@ -4,11 +4,14 @@
 }
 body{
     width: 450px;
-    height: 450px;
-    background-color: #0c0435;
+   
+    background-image: url("images/tail.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    
     margin-top:225px;
-    margin-left:225px;
-    margin-right:225px;
+    margin-left:auto;
+    margin-right:auto;
   
 }
 
@@ -19,8 +22,11 @@ body{
     box-shadow: 15px 20px 50px rgba(0, 0, 0, 0.5);
     text-align: center;
     border:3px solid rgb(0, 10, 102);
-    background-color:rgba(0, 0, 0, 0.315); 
+    background-color:rgb(43, 34, 73); 
     border-radius: 25px;
+
+
+    
 
 }
 
@@ -35,12 +41,13 @@ body{
 input[name="login_data"], input[name="password_data"]{
     height: 15px;
     width: 175px;
-    background:rgb(5, 122, 231);
-    border:3px solid  rgb(10, 31, 122);
+    background:rgb(0, 0, 0);
+    border:3px solid  rgb(95, 101, 131);
     color: white;
     font-weight: bolder;
     border-radius: 20px;
     margin: 5px 15px;
+    margin-bottom: 15px;
     text-align: center;
     display: initial;
 
@@ -69,9 +76,7 @@ input[name="login_data"]:valid, input[name="password_data"]:valid{
 
 
 input[name="login_data"]:hover, input[name="password_data"]:hover{
-    background:rgb(5, 122, 231);
     border:3px solid  rgb(7, 255, 27);
-
     transition-delay: 0.1s;
     transition-duration: 1s;
     
@@ -83,7 +88,7 @@ input[name="login_data"]:focus, input[name="password_data"]:focus{
   
     background: rgb(56, 56, 56);
     border: 3px solid lightcoral;
-    
+   
     transform: scaleX(1.1);
     transition-delay: 0.1s;
     transition-duration: 1s;;
@@ -93,14 +98,14 @@ input[name="login_data"]:focus, input[name="password_data"]:focus{
 
 input[name="login_button"], input[name="register_button"]{
 
-    background:rgb(11, 15, 236);
+    background:rgb(0, 0, 0);
     height: 25px;
     width: 125px;
     color: white;
-    border:3px solid  rgb(10, 31, 122);
+    border:3px solid  rgb(95, 101, 131);
     border-radius: 20px;
     text-align: center;
-    margin: 15px 15px;
+    margin: 5px 15px;
     display: initial;
 
     

@@ -1,0 +1,38 @@
+*{
+    font-family: sans-serif;
+ 
+}
+body{
+    width: 450px;
+    height: 450px;
+    background-image: url("images/tail.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
+  
+    margin-top:15px;
+    margin-left:auto;
+    margin-right:auto;
+  
+}
+
+#contener{
+    
+    color:white;
+    font-size: 25px;
+    height: 100%;
+    font-weight: bolder;
+    box-shadow: 15px 20px 50px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    border:3px solid rgb(0, 10, 102);
+    background-color:rgb(43, 34, 73); 
+    border-radius: 25px;
+    
+}
+
+#register_box{
+
+    margin: 20px 100px;
+    height: 150px;
+    width: 200px;
+    font-size: 15px;
+}
