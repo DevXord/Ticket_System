@@ -1,1 +1,1 @@
-This project was created for the purposes of recruitment for the company coody.it dealing with the creation of online stores.
+This project was created for the purposes of recruitment for the company Coody.it dealing with the creation of online stores.
