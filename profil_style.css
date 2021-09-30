@@ -35,16 +35,13 @@ body{
     flex-direction:row;
     justify-content: space-between
 }
-.image_header_icon{
 
-    height: 25px;
-    margin-top:5px;
-}
 #main{
     color:white;
     margin-top:10px;
     font-size: 15px;
     min-height: 550px;
+    height: 550px;
     width: 850px;
     font-weight: bolder;
     box-shadow: 15px 20px 50px rgba(0, 0, 0, 0.5);
@@ -54,6 +51,15 @@ body{
     border-radius: 25px;
     
 }
+#user_photo_contener{
+
+    height: auto;
+    width: 155px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    margin-left: 10px;
+    text-align: center;
+}   
 #footer{
     font-weight: bolder;
     color:white;
@@ -91,24 +97,33 @@ body{
     text-align:left;
  
 }
+
+.image_header_icon{
+
+    height: 25px;
+    margin-top:5px;
+}
+
+
+
 .image_header_icon:hover{
     height: 29px;
     transition-delay: 0.1s;
     transition-duration: 1s;
 
 }
-.image_icon{
-
-   
-    max-height: 35px;
-    margin-right: 30px;
-    margin-left: 500px;
+#edit_side_profil{
+ 
+    height: 40px;
+    border: 1px solid white;
     color: white;
     border-radius: 20px;
-    cursor: pointer;
+    margin-top: 250px;
+ 
+    
 }
 
-.image_icon:hover{
+#edit_side_profil:hover{
 
     height: 60px;
     transition-delay: 0.1s;

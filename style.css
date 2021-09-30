@@ -52,6 +52,7 @@ input[name="login_data"], input[name="password_data"]{
     margin-bottom: 15px;
     text-align: center;
     display: initial;
+    
 }
 
 input[name="login_data"]::placeholder, input[name="password_data"]::placeholder{
