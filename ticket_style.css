@@ -16,6 +16,9 @@ body{
     background-attachment:fixed;
 }
 
+
+
+/* HEADER */
 #header{
 
     font-weight: bolder;
@@ -49,6 +52,14 @@ body{
     border-radius: 25px;
     
 }
+.image_header_icon:hover{
+    height: 29px;
+    transition-delay: 0.1s;
+    transition-duration: 1s;
+
+}
+
+
 
 
 
@@ -116,8 +127,75 @@ body{
     flex-wrap: nowrap;
     cursor: pointer;
 } 
+#button_contener{
+
+    display: inline-block;
+    margin: auto auto;
+    padding-bottom: 25px;
+     
+    
 
 
+}
+.button_ticket{
+
+    background:rgb(0, 0, 0);
+    height: 25px;
+    width: 125px;
+    color: white;
+    border:3px solid  rgb(95, 101, 131);
+    border-radius: 20px;
+    text-align: center;
+    margin-left: 15px;
+    display: initial;
+    cursor: pointer;
+}
+
+.radio_ticket{
+    display: inline-flex;
+     
+
+}
+.button_ticket:hover{
+
+    background: rgb(56, 56, 56);
+    border: 3px solid lightcoral;
+    transform: scaleX(1.2);
+    transition-duration: 1s;
+}
+
+.text_ticket{
+
+    background:rgb(0, 0, 0);
+    border:3px solid  rgb(95, 101, 131);
+    color: white;
+    font-weight: bolder;
+    border-radius: 20px;
+    margin-left: 150px;
+    text-align: center;
+    display: initial;
+    transform: scaleX(1);
+    transition-delay: 0.1s;
+    transition-duration: 1s;
+
+
+}
+
+.text_ticket:focus{
+
+    background: rgb(56, 56, 56);
+    border: 3px solid lightcoral;
+    transform: scaleX(1.1);
+    transition-delay: 0.1s;
+    transition-duration: 1s;;
+}
+
+.text_ticket:hover{
+    
+    border: 3px solid lightcoral;
+    transition-delay: 0.1s;
+    transition-duration: 1s;
+}
 
 #ticket_conener{
 
@@ -275,8 +353,6 @@ body{
     border:3px solid rgb(255, 255, 255);
     background-color:rgb(42, 42, 42); 
     border-radius: 25px;
-    transition-delay: 0.1s;
-    transition-duration: 1s;
     display:flex;
     flex-direction: column;
 
@@ -307,9 +383,3 @@ body{
    
 }
 
-.image_header_icon:hover{
-    height: 29px;
-    transition-delay: 0.1s;
-    transition-duration: 1s;
-
-}
