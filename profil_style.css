@@ -36,12 +36,38 @@ body{
     justify-content: space-between
 }
 
+
+.image_header_icon{
+
+    height: 25px;
+    margin-top:5px;
+}
+
+
+
+.image_header_icon:hover{
+    height: 29px;
+    transition-delay: 0.1s;
+    transition-duration: 1s;
+
+}
+
+
+
+#user_name_profil_id, #user_birthday_profil_id, #user_email_profil_id{
+    margin-left: 50px; 
+    margin-top: 30px;
+}
+
+
+
+
 #main{
     color:white;
     margin-top:10px;
     font-size: 15px;
     min-height: 550px;
-    height: 550px;
+    height: auto;
     width: 850px;
     font-weight: bolder;
     box-shadow: 15px 20px 50px rgba(0, 0, 0, 0.5);
@@ -50,8 +76,84 @@ body{
     background-color:rgb(42, 42, 42); 
     border-radius: 25px;
     
+    
 }
-#user_photo_contener{
+
+
+#user_settings_contener,#user_form_contener{
+
+    background-color:rgba(78, 78, 78, 0.198);
+    width: 100%;
+    height: auto;
+    border-radius: 11px; 
+    display:flex;
+    margin-left: 25px;
+    flex-direction: column;
+
+ 
+}
+#user_form_contener{
+    background-color: rgba(0, 128, 0, 0);
+}
+
+#Link_coody{
+
+    color:lightseagreen;
+    text-decoration: none;
+    font-size: 22px;
+    
+
+
+}
+.inpit_label{
+
+    font-size: 16px;
+    color:white;
+    margin-top: 15px;
+    margin-left: 25px;
+
+
+}
+.edit_inputs{
+
+    height: 15px;
+    width: 175px;
+    background:rgb(0, 0, 0);
+    border:3px solid  rgb(95, 101, 131);
+    color: white;
+    font-weight: bolder;
+    border-radius: 20px;
+    margin-left: 50px;
+    text-align: center;
+    display: initial;
+}
+
+#user_password_edit,#user_rpassword_edit{
+    margin-top: 35px;
+}
+
+
+
+
+.edit_inputs:hover{
+
+
+    border: 3px solid lightcoral;
+    transition-delay: 0.1s;
+    transition-duration: 1s;
+}
+
+
+
+
+
+
+
+
+
+
+
+#user_left_contener{
 
     height: auto;
     width: 155px;
@@ -59,19 +161,10 @@ body{
     margin-bottom: 15px;
     margin-left: 10px;
     text-align: center;
-}   
-#footer{
-    font-weight: bolder;
-    color:white;
-    width: 100%;
-    text-align: center;
-    box-shadow: 15px 20px 50px rgba(0, 0, 0, 0.5);
-    margin-top: 15px;
-    border:3px solid rgb(255, 255, 255);
-    background-color:rgb(42, 42, 42); 
-    border-radius: 25px;
-    display:inline-block;
+    display: flex;
+    flex-direction: column;
 }
+
 
 #user_photo_profil_id{
 
@@ -82,10 +175,28 @@ body{
     margin-left: 20px;
     border:4px solid lightcoral;
     border-radius: 50px;
+    
+     
    
 }
+#user_rangs{
+    margin-top: 15px;
+    margin-bottom:15px;
+}
+#user_status{
+    margin-top: 15px;
+    margin-bottom:15px;
+}
 
-#edit_button{
+#user_photo_edit{
+
+  margin-left: 50px;
+  margin-top: 45px;
+  margin-bottom: 30px;
+    
+}
+
+#edit_button,#save_button{
 
     background-image: url(images/icon_link/edit.png);
     background-color: black;
@@ -114,37 +225,24 @@ body{
 
 
 
-#user_settings_contener{
 
-    background-color:rgba(70, 73, 73, 0.198);
+
+
+
+#footer{
+    font-weight: bolder;
+    color:white;
     width: 100%;
-    border-radius: 11px; 
-    margin-left: 25px;
-    margin-right: auto;
-    padding-left: 20px;
-    padding-top: 10px; 
-    text-align:left;
- 
-}
-
-.image_header_icon{
-
-    height: 25px;
-    margin-top:5px;
+    text-align: center;
+    box-shadow: 15px 20px 50px rgba(0, 0, 0, 0.5);
+    margin-top: 15px;
+    border:3px solid rgb(255, 255, 255);
+    background-color:rgb(42, 42, 42); 
+    border-radius: 25px;
+    display:inline-block;
 }
 
 
 
-.image_header_icon:hover{
-    height: 29px;
-    transition-delay: 0.1s;
-    transition-duration: 1s;
-
-}
 
 
-
-#user_name_profil_id, #user_birthday_profil_id, #user_email_profil_id{
-    margin-left: 50px; 
-    margin-top: 30px;
-}
