@@ -3,6 +3,42 @@
     font-family: sans-serif;
 }
 
+#info_contener{
+
+    height: 20px;
+    width: auto;
+    font-size: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: -35px;
+    border: 4px solid rgb(4, 61, 19);
+    background-color: rgb(3, 105, 71);
+    color: white;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+
+
+}
+
+#error_contener{
+
+    height: 20px;
+    width: auto;
+    font-size: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: -35px;
+    border: 4px solid rgb(61, 20, 20);
+    background-color: rgb(92, 21, 21);
+    color: white;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+
+
+}
+
 #Link_coody{
 
     color:lightseagreen;
@@ -12,7 +48,11 @@
 
 
 }
-
+#error_label{
+    color: red;
+    font-size: 12px;
+    font-weight:bold;
+}
 body{
 
     width: 450px;
@@ -50,7 +90,7 @@ body{
     width: 200px;
 }
 
-input[name="login_data"], input[name="password_data"]{
+input[name="email_data"], input[name="password_data"]{
   
     height: 15px;
     width: 175px;
@@ -66,11 +106,11 @@ input[name="login_data"], input[name="password_data"]{
     
 }
 
-input[name="login_data"]::placeholder, input[name="password_data"]::placeholder{
+input[name="email_data"]::placeholder, input[name="password_data"]::placeholder{
    
     color:white;
 }
-input[name="login_data"]:valid, input[name="password_data"]:valid{
+input[name="email_data"]:valid, input[name="password_data"]:valid{
    
     background: rgb(18, 121, 4);
     border: 3px solid lightcoral;
@@ -80,7 +120,7 @@ input[name="login_data"]:valid, input[name="password_data"]:valid{
     transition-duration: 1s;
 }
 
-input[name="login_data"]:invalid, input[name="password_data"]:invalid{
+input[name="email_data"]:invalid, input[name="password_data"]:invalid{
    
     background: rgb(121, 8, 4);
     border: 3px solid lightcoral;
@@ -90,7 +130,7 @@ input[name="login_data"]:invalid, input[name="password_data"]:invalid{
     transition-duration: 1s;
 }
 
-input[name="login_data"]:placeholder-shown, input[name="password_data"]:placeholder-shown{
+input[name="email_data"]:placeholder-shown, input[name="password_data"]:placeholder-shown{
   
     background:rgb(0, 0, 0);
     border:3px solid  rgb(95, 101, 131);
@@ -108,14 +148,14 @@ input[name="login_data"]:placeholder-shown, input[name="password_data"]:placehol
  
 
 
-input[name="login_data"]:hover, input[name="password_data"]:hover{
+input[name="email_data"]:hover, input[name="password_data"]:hover{
  
     border: 3px solid lightcoral;
     transition-delay: 0.1s;
     transition-duration: 1s;
 }
 
-input[name="login_data"]:focus, input[name="password_data"]:focus{
+input[name="email_data"]:focus, input[name="password_data"]:focus{
   
     background: rgb(56, 56, 56);
     border: 3px solid lightcoral;

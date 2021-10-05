@@ -4,7 +4,9 @@
     <head>
         <meta charset="UTF-8" />
         <title>Write Ticket</title>
-        <link rel="stylesheet" type="text/css" href="write_tickets_style.css" />
+        <!-- <link rel="stylesheet" type="text/css" href="write_tickets_style.css" /> -->
+        <link href="write_tickets_style.css?<?=filemtime("write_tickets_style.css")?>" rel="stylesheet" type="text/css" />
+
         <link rel="icon" href="images\Favicon\side_icon.ico">
         <meta name="description" content="Ticket System" />
         <meta name="author" content="Patryk Kaszuba" />
@@ -16,9 +18,9 @@
 
             <div id="header">
                 <div id="link_contener">
-                    <a id="user_go_profil" href="profil_side.html"><img class="image_header_icon" title="Profil side" alt="Go to profil icon" src="User_profils\default_profil\default.png"></a>
-                    <a id="user_go_tickets" href="ticket_side.html"><img class="image_header_icon" title="Ticket side" alt="Go to tickets icon" src="images/icon_link/tickets.png"></a>
-                    <a class="user_logout" href="index.html"> <img class="image_header_icon" title="Log out" alt="Log out icon"src="images/icon_link/logout.png"></a>
+                    <a id="user_go_profil" href="profil_side.php"><img class="image_header_icon" title="Profil side" alt="Go to profil icon" src="User_profils\default_profil\default.png"></a>
+                    <a id="user_go_tickets" href="ticket_side.php"><img class="image_header_icon" title="Ticket side" alt="Go to tickets icon" src="images/icon_link/tickets.png"></a>
+                    <a class="user_logout" href="index.php"> <img class="image_header_icon" title="Log out" alt="Log out icon"src="images/icon_link/logout.png"></a>
                 </div>
             </div>
 
@@ -35,7 +37,7 @@
                             <label class="label_text">Write your title:</label>
                             <input id="title_input" type="text" name="title_text" maxlength="54">
                             <label class="label_text">Write your message and clicked send</label>
-                            <textarea id="text_input" rows="20" cols="50"></textarea>
+                            <textarea id="text_input"  maxlength="325"></textarea>
                             <input id="send_text_input" type="submit" value="Send">
                         </div>
                     </form>

@@ -13,6 +13,99 @@ body{
   
 }
 
+#user_join_date{
+
+    font-size: 17px;
+    text-align: center;
+    margin-top:5px;
+    text-shadow: 3px 3px black;
+}
+#user_online{
+
+    color: rgb(2, 104, 24);
+    font-size: 17px;
+    text-align: center;
+    margin-top:5px;
+    margin-bottom:10px;
+    text-shadow: 3px 3px black;
+
+}
+#user_offline{
+
+    color: rgb(104, 6, 2);
+    font-size: 17px;
+    text-align: center;
+    margin-top:5px;
+    text-shadow: 3px 3px black;
+
+}
+#rang_style_user{
+    color: rgb(0, 140, 255);
+    font-size: 17px;
+    text-align: center;
+    margin-bottom: 25px;
+    text-shadow: 3px 3px black;
+}
+
+#rang_style_moderator{
+    color: rgb(10, 124, 35);
+    font-size: 17px;
+    text-align: center;
+    margin-bottom: 25px;
+    text-shadow: 3px 3px black;
+}
+
+#rang_style_admin{
+    color: rgb(224, 18, 11);
+    font-size: 17px;
+    text-align: center;
+    margin-bottom: 25px;
+    text-shadow: 3px 3px black;
+}
+#rang_style_headadmin{
+    color: rgb(119, 8, 8);
+    font-size: 17px;
+    text-align: center;
+    margin-bottom: 25px;
+    text-shadow: 3px 3px black;
+}
+
+#info_contener{
+
+    height: 20px;
+    width: auto;
+    font-size: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: -35px;
+    border: 4px solid rgb(4, 61, 19);
+    background-color: rgb(3, 105, 71);
+    color: white;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+
+
+}
+
+#error_contener{
+
+    height: 20px;
+    width: auto;
+    font-size: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: -35px;
+    border: 4px solid rgb(61, 20, 20);
+    background-color: rgb(92, 21, 21);
+    color: white;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+
+
+}
+
 #header{
 
     font-weight: bolder;
@@ -20,7 +113,7 @@ body{
     height: 35px;
     width: 100%;
     box-shadow: 15px 20px 50px rgba(0, 0, 0, 0.5);
-    margin-top: 15px;
+    margin-top: 25px;
     border:3px solid rgb(255, 255, 255);
     background-color:rgb(42, 42, 42); 
     border-radius: 25px;
@@ -108,10 +201,20 @@ body{
 .inpit_label{
 
     font-size: 16px;
-    color:white;
+    color:rgb(202, 202, 202);
     margin-top: 15px;
     margin-left: 25px;
+    text-shadow: 3px 3px black;
 
+
+}
+
+.user_value{
+    font-size: 16px;
+    color:rgb(255, 255, 255);
+    margin-top: 15px;
+    margin-left: 50px;
+    text-shadow: 3px 3px black;
 
 }
 .edit_inputs{
@@ -182,10 +285,16 @@ body{
 #user_rangs{
     margin-top: 15px;
     margin-bottom:15px;
+    font-weight: bold;
+    text-shadow: 2px 2px black;
+    
+    
 }
 #user_status{
     margin-top: 15px;
     margin-bottom:15px;
+    font-weight: bold;
+    text-shadow: 2px 2px black;
 }
 
 #user_photo_edit{

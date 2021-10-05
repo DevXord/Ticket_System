@@ -4,7 +4,9 @@
     <head>
         <meta charset="UTF-8" />
         <title>Ticket List</title>
-        <link rel="stylesheet" type="text/css" href="ticket_style.css" />
+        <!-- <link rel="stylesheet" type="text/css" href="ticket_style.css" /> -->
+        <link href="ticket_style.css?<?=filemtime("ticket_style.css")?>" rel="stylesheet" type="text/css" />
+
         <link rel="icon" href="images\Favicon\side_icon.ico">
         <meta name="description" content="Ticket System" />
         <meta name="author" content="Patryk Kaszuba" />
@@ -15,8 +17,8 @@
 
             <div id="header">
                 <div id="link_contener">
-                    <a id="user_go_profil" href="profil_side.html"><img class="image_header_icon" title="Profil side" alt="Go back to profil icon" src="User_profils\default_profil\default.png"></a>
-                    <a class="user_logout" href="index.html"> <img class="image_header_icon" title="Log out" alt="Log out icon"src="images/icon_link/logout.png"></a>
+                    <a id="user_go_profil" href="profil_side.php"><img class="image_header_icon" title="Profil side" alt="Go back to profil icon" src="User_profils\default_profil\default.png"></a>
+                    <a class="user_logout" href="index.php"> <img class="image_header_icon" title="Log out" alt="Log out icon"src="images/icon_link/logout.png"></a>
                 </div>
             </div>
 
@@ -42,7 +44,7 @@
                         <div id="ticket_list">
                 
                             <label  id="user_check"><input type="checkbox" id="user_checkbox" name="all_user_checkbox"></label>
-                            <a id= "user_name_ticket" href="profil_side.html"><img id="image_user_in_list" title="Profil side" alt="User profil icon" src="User_profils\default_profil\default.png">Krzffffffysu sdddddobiet</a>
+                            <a id= "user_name_ticket" href="profil_side.php"><img id="image_user_in_list" title="Profil side" alt="User profil icon" src="User_profils\default_profil\default.png">Krzffffffysu sdddddobiet</a>
                             <label  id="user_ticket">Problem z komddddddddpem</label>
                             <label  id="user_date">25/01/1992</label>
                             <label  id="user_status"><img src="images\Theme_status\closed.png" id="image_status_icon" title="Status" alt="Status icon"></label> 
@@ -51,7 +53,7 @@
                     </div>
                 </div>
                 <div id="button_contener"> 
-                    <a href="write_tickets_side.html"> <input class="button_ticket" id="add_ticket_bt" type="button" value="Add new ticket" title="Added" alt="Add new ticket" name="add_ticket_button"></a>
+                    <a href="write_tickets_side.php"> <input class="button_ticket" id="add_ticket_bt" type="button" value="Add new ticket" title="Added" alt="Add new ticket" name="add_ticket_button"></a>
                     <input class="button_ticket" id="delete_ticket_bt" type="button" value="Delete ticket" title="Deleted" alt="Delete ticket" name="delete_ticket_button">
                     <input class="text_ticket" id="search_ticket_tx" type="search" placeholder="Write a keyword" alt="Write a keyword" name="search_ticket_text">
                     <input class="radio_ticket" id="search_user__radio"type="radio" name="radio_user">  <label for="radio_user">User</label>
