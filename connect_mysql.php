@@ -1,5 +1,6 @@
 <?php
-
+   
+  
     $host = 'localhost';
     $username = 'ticketadmin';
     $userpassword = '12345';

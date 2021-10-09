@@ -18,7 +18,7 @@ body{
     width: 450px;
     height: auto;
     background-image: url("images/tail.png");
-    background-repeat: no-repeat;
+    background-repeat: repeat-y;
     background-size: 100%;
    
     margin-left:auto;

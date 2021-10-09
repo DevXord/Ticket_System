@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 05 Paź 2021, 14:20
+-- Czas generowania: 09 Paź 2021, 08:02
 -- Wersja serwera: 10.4.21-MariaDB
 -- Wersja PHP: 8.0.10
 
@@ -29,44 +29,79 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `admins_db` (
   `ID` int(11) NOT NULL,
-  `Name` varchar(24) NOT NULL,
-  `Surname` varchar(24) NOT NULL,
   `Email` varchar(30) NOT NULL,
-  `Password` varchar(24) NOT NULL,
   `Rang_strong` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Zrzut danych tabeli `admins_db`
+--
+
+INSERT INTO `admins_db` (`ID`, `Email`, `Rang_strong`) VALUES
+(1, 'root@root.com', 3),
+(2, 'moderator@moderator.com', 1),
+(3, 'admin@admin.com', 2);
+
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `ticket_list`
+-- Struktura tabeli dla tabeli `banned_db`
 --
 
-CREATE TABLE `ticket_list` (
+CREATE TABLE `banned_db` (
   `ID` int(11) NOT NULL,
-  `Date_added` varchar(24) NOT NULL,
-  `Title` varchar(54) NOT NULL,
-  `Author_name` varchar(24) NOT NULL,
-  `Author_surname` varchar(24) NOT NULL,
-  `Author_email` varchar(24) NOT NULL,
-  `Ticket_status` int(11) NOT NULL,
-  `Priority` tinyint(1) NOT NULL
+  `Banned_email` varchar(50) NOT NULL,
+  `Banned_name` varchar(24) NOT NULL,
+  `Banned_reason` text NOT NULL,
+  `Banned_time` int(11) NOT NULL,
+  `Admin_email` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `ticket_themes_db`
+-- Struktura tabeli dla tabeli `edit_db`
 --
 
-CREATE TABLE `ticket_themes_db` (
+CREATE TABLE `edit_db` (
   `ID` int(11) NOT NULL,
-  `Author_Email` varchar(30) NOT NULL,
-  `Author_Name` varchar(24) NOT NULL,
-  `Author_Surame` varchar(24) NOT NULL,
+  `Writter_ID` int(11) NOT NULL,
+  `Thema_ID` int(11) NOT NULL,
+  `Edit_value` text NOT NULL,
+  `Date_edit` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `message_db`
+--
+
+CREATE TABLE `message_db` (
+  `ID` int(11) NOT NULL,
+  `Writter_ID` int(11) NOT NULL,
+  `Thema_ID` int(11) NOT NULL,
+  `Date_added` varchar(30) NOT NULL,
+  `Value` text NOT NULL,
+  `Edit_value` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `ticket_db`
+--
+
+CREATE TABLE `ticket_db` (
+  `ID` int(11) NOT NULL,
+  `Date_added` varchar(30) NOT NULL,
   `Title` varchar(54) NOT NULL,
-  `Value` varchar(325) NOT NULL,
-  `Date_added` varchar(24) NOT NULL
+  `Author_name` varchar(24) NOT NULL,
+  `Author_surname` varchar(24) NOT NULL,
+  `Author_email` varchar(30) NOT NULL,
+  `Status` int(11) NOT NULL,
+  `Priority` int(11) NOT NULL,
+  `Value` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -82,8 +117,20 @@ CREATE TABLE `users_db` (
   `Email` varchar(30) NOT NULL,
   `Password` varchar(24) NOT NULL,
   `Join_Date` date NOT NULL DEFAULT current_timestamp(),
-  `Images_url` text NOT NULL
+  `Images_url` text NOT NULL,
+  `Warning` int(11) NOT NULL,
+  `Online` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Zrzut danych tabeli `users_db`
+--
+
+INSERT INTO `users_db` (`ID`, `Name`, `Surname`, `Email`, `Password`, `Join_Date`, `Images_url`, `Warning`, `Online`) VALUES
+(1, 'root', 'root', 'root@root.com', 'xxxxxx', '2021-10-09', '', 0, 0),
+(2, 'Admin', 'Admin', 'admin@admin.com', 'xxxxxx', '2021-10-09', '', 0, 0),
+(3, 'Moder', 'Moderator', 'moderator@moderator.com', 'xxxxxx', '2021-10-09', '', 0, 0),
+(4, 'Jacek', 'Soplica', 'jsoplica@gmail.com', 'xxxxxx', '2021-10-09', '', 0, 0);
 
 --
 -- Indeksy dla zrzutów tabel
@@ -96,15 +143,27 @@ ALTER TABLE `admins_db`
   ADD PRIMARY KEY (`ID`);
 
 --
--- Indeksy dla tabeli `ticket_list`
+-- Indeksy dla tabeli `banned_db`
 --
-ALTER TABLE `ticket_list`
+ALTER TABLE `banned_db`
   ADD PRIMARY KEY (`ID`);
 
 --
--- Indeksy dla tabeli `ticket_themes_db`
+-- Indeksy dla tabeli `edit_db`
 --
-ALTER TABLE `ticket_themes_db`
+ALTER TABLE `edit_db`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Indeksy dla tabeli `message_db`
+--
+ALTER TABLE `message_db`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Indeksy dla tabeli `ticket_db`
+--
+ALTER TABLE `ticket_db`
   ADD PRIMARY KEY (`ID`);
 
 --
@@ -121,25 +180,37 @@ ALTER TABLE `users_db`
 -- AUTO_INCREMENT dla tabeli `admins_db`
 --
 ALTER TABLE `admins_db`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT dla tabeli `banned_db`
+--
+ALTER TABLE `banned_db`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT dla tabeli `ticket_list`
+-- AUTO_INCREMENT dla tabeli `edit_db`
 --
-ALTER TABLE `ticket_list`
+ALTER TABLE `edit_db`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT dla tabeli `ticket_themes_db`
+-- AUTO_INCREMENT dla tabeli `message_db`
 --
-ALTER TABLE `ticket_themes_db`
+ALTER TABLE `message_db`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT dla tabeli `ticket_db`
+--
+ALTER TABLE `ticket_db`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT dla tabeli `users_db`
 --
 ALTER TABLE `users_db`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

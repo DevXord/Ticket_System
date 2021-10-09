@@ -1,4 +1,26 @@
+<?php
  
+    $_SESSION = array();
+ 
+    if( ini_get( "session.use_cookies" ) ) {
+        $params = session_get_cookie_params();
+
+        setcookie(
+        session_name()
+        , ''
+        , time() - 42000
+        , $params[ "path"     ]
+        , $params[ "domain"   ]
+        , $params[ "secure"   ]
+        , $params[ "httponly" ]
+        );
+    }
+    if( session_status() === PHP_SESSION_ACTIVE ) { session_destroy(); }
+ 
+?>
+
+
+
 <!DOCTYPE html>
 
 <html lang="pl">
@@ -56,21 +78,22 @@
                             $usersn = $_POST["user_surname"];
                             $userem = $_POST["user_email"];
                             $userpass = $_POST["user_password"];
+                            $uimg = NULL;
 
-                            $sql =  "INSERT INTO `users_db`(`Name`, `Surname`, `Email`, `Password`, `Join_Date`, `Images_url`) VALUES ('$usern','$usersn','$userem','$userpass','$nowDate','NULL')";
+                            $sql =  "INSERT INTO `users_db`(`Name`, `Surname`, `Email`, `Password`, `Join_Date`, `Images_url`) VALUES ('$usern','$usersn','$userem','$userpass','$nowDate','$uimg')";
 
                             
                             if($resulttwo = $db->query($sql))
                             {
                                 
-                                echo '<br><div id="info_contener"> Info: The account has been created !</div><br>';
                                 header("location: index.php");
+                                echo '<br><div id="info_contener"> Info: The account has been created !</div><br>';
                             }
                             else
                             {
-                                echo '<br><div id="error_contener"> Warning: Problem with sending!</div><br>';
                                 $resulttwo->close();
                                 header("location: register_side.php");
+                                echo '<br><div id="error_contener"> Warning: Problem with sending!</div><br>';
 
                             }
                         }

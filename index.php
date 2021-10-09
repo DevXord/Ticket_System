@@ -1,5 +1,22 @@
 <?php
-    session_start();
+ 
+    $_SESSION = array();
+ 
+    if( ini_get( "session.use_cookies" ) ) {
+        $params = session_get_cookie_params();
+
+        setcookie(
+        session_name()
+        , ''
+        , time() - 42000
+        , $params[ "path"     ]
+        , $params[ "domain"   ]
+        , $params[ "secure"   ]
+        , $params[ "httponly" ]
+        );
+    }
+    if( session_status() === PHP_SESSION_ACTIVE ) { session_destroy(); }
+ 
 ?>
 <!DOCTYPE html>
 
@@ -40,7 +57,7 @@
                     $users_number = $result->num_rows;
                     if($users_number == 1)
                     {
-
+                        session_start();
                         $data = $result->fetch_assoc();
 
                         $_SESSION['id'] =  $data['ID'];
@@ -50,10 +67,18 @@
 
                         $_SESSION['upass'] =  $data['Password'];
                         $_SESSION['jdate'] =  $data['Join_Date'];
-                        $_SESSION['img'] =  $data['Images_url'];
-                        $_SESSION['login'] =  true;
                         
-                        $sqlt = "SELECT * FROM admins_db WHERE Email = '$uemail' AND Password = '$upassword'";
+
+                        if($data['Images_url'] == NULL)
+                            $_SESSION['img'] = NULL;
+                        else
+                            $_SESSION['img'] = $data['Images_url'];
+
+                        $_SESSION['login'] =  true;
+
+                        
+                        
+                        $sqlt = "SELECT * FROM admins_db WHERE Email = '$uemail'";
 
                         if($resulttwo = $db->query($sqlt))
                         {
@@ -62,22 +87,28 @@
                             {
                                 $adata = $resulttwo->fetch_assoc();
                                 $_SESSION['Rangs'] =  $adata['Rang_strong'];
-                                $result->close();
-                                $resulttwo->close();
                                 header("location: profil_side.php");
-                               
                             }
                             else
                             {
                                 $_SESSION['Rangs'] = 0;
-                                $result->close();
                                 header("location: profil_side.php");
                             }
+                        
+                             
+                            $resulttwo->close();
+                          
                         }
+                        $sqlt = "UPDATE users_db  SET `Online`='1' WHERE Email = '$uemail'";
+                        
+                        $db->query($sqlt);
+                        $_SESSION['uonline'] = 1;
+                        
                     }
                     else
                         echo '<br><div id="error_contener"> Warning: The user does not exist!</div><br>';
             
+                    $result->close();
                 }
                 
             }
