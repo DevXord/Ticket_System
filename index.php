@@ -50,65 +50,90 @@
             {
                 $uemail = $_POST['email_data'];
                 $upassword = $_POST['password_data'];
-                $sql = "SELECT * FROM users_db WHERE Email = '$uemail' AND Password = '$upassword'";
-
-                if($result = $db->query($sql))
+                $isban = false;$breason;$bdate;$baemail;
+                $bsql = "SELECT * FROM banned_db WHERE Banned_email = '$uemail'";
+                if($bresult = $db->query($bsql))
                 {
-                    $users_number = $result->num_rows;
-                    if($users_number == 1)
+                    $banusers_number = $bresult->num_rows;
+                    if($banusers_number == 1)
                     {
-                        session_start();
-                        $data = $result->fetch_assoc();
-
-                        $_SESSION['id'] =  $data['ID'];
-                        $_SESSION['uname'] =  $data['Name'];
-                        $_SESSION['usname'] =  $data['Surname'];
-                        $_SESSION['uemail'] =  $data['Email'];
-
-                        $_SESSION['upass'] =  $data['Password'];
-                        $_SESSION['jdate'] =  $data['Join_Date'];
-                        
-
-                        if($data['Images_url'] == NULL)
-                            $_SESSION['img'] = NULL;
-                        else
-                            $_SESSION['img'] = $data['Images_url'];
-
-                        $_SESSION['login'] =  true;
-
-                        
-                        
-                        $sqlt = "SELECT * FROM admins_db WHERE Email = '$uemail'";
-
-                        if($resulttwo = $db->query($sqlt))
-                        {
-                            $users_number = $resulttwo->num_rows;
-                            if($users_number == 1)
-                            {
-                                $adata = $resulttwo->fetch_assoc();
-                                $_SESSION['Rangs'] =  $adata['Rang_strong'];
-                                header("location: profil_side.php");
-                            }
-                            else
-                            {
-                                $_SESSION['Rangs'] = 0;
-                                header("location: profil_side.php");
-                            }
-                        
-                             
-                            $resulttwo->close();
-                          
-                        }
-                        $sqlt = "UPDATE users_db  SET `Online`='1' WHERE Email = '$uemail'";
-                        
-                        $db->query($sqlt);
-                        $_SESSION['uonline'] = 1;
-                        
+                        $data = $bresult->fetch_assoc();
+                        $breason = $data['Banned_reason'];
+                        $bdate  = $data['Banned_date'];
+                        $baemail = $data['Admin_email'];
+                        $isban = true;
                     }
-                    else
-                        echo '<br><div id="error_contener"> Warning: The user does not exist!</div><br>';
-            
-                    $result->close();
+                    $bresult->close();
+                }
+                if($isban == false)
+                {
+                    $sql = "SELECT * FROM users_db WHERE Email = '$uemail' AND Password = '$upassword'";
+
+                    if($result = $db->query($sql))
+                    {
+                        $users_number = $result->num_rows;
+                        if($users_number == 1)
+                        {
+                            session_start();
+                            $data = $result->fetch_assoc();
+
+                            $_SESSION['id'] =  $data['ID'];
+                            $_SESSION['uname'] =  $data['Name'];
+                            $_SESSION['usname'] =  $data['Surname'];
+                            $_SESSION['uemail'] =  $data['Email'];
+
+                            $_SESSION['upass'] =  $data['Password'];
+                            $_SESSION['jdate'] =  $data['Join_Date'];
+                            
+
+                            if($data['Images_url'] == NULL)
+                                $_SESSION['img'] = NULL;
+                            else
+                                $_SESSION['img'] = $data['Images_url'];
+
+                            $_SESSION['login'] =  true;
+
+                            
+                            
+                            $sqlt = "SELECT * FROM admins_db WHERE Email = '$uemail'";
+
+                            if($resulttwo = $db->query($sqlt))
+                            {
+                                $users_number = $resulttwo->num_rows;
+                                if($users_number == 1)
+                                {
+                                    $adata = $resulttwo->fetch_assoc();
+                                    $_SESSION['Rangs'] =  $adata['Rang_strong'];
+                                    header("location: profil_side.php");
+                                }
+                                else
+                                {
+                                    $_SESSION['Rangs'] = 0;
+                                    header("location: profil_side.php");
+                                }
+                            
+                                
+                                $resulttwo->close();
+                            
+                            }
+                            $sqlt = "UPDATE users_db  SET `Online`='1' WHERE Email = '$uemail'";
+                            
+                            $db->query($sqlt);
+                            $_SESSION['uonline'] = 1;
+                            
+                        }
+                        else
+                            echo '<br><div id="error_contener"> Warning: The user does not exist!</div><br>';
+                
+                        $result->close();
+                    }
+                }
+                else
+                {
+                    echo '<br><div id="error_contener"> Banned: Your account is banned!<br>';
+                    echo 'Reason: '.$breason.'<br>';
+                    echo 'Date: '.$bdate.'<br>';
+                    echo 'Email admin: '.$baemail.'</div><br>';
                 }
                 
             }

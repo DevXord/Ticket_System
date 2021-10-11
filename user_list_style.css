@@ -1,0 +1,252 @@
+*
+{
+
+    font-family: sans-serif;
+}
+#Link_coody{
+
+    color:lightseagreen;
+    text-decoration: none;
+    font-size: 22px;
+    
+
+
+}
+
+body{
+
+    width: 850px;
+    min-height: 670px;
+    background-image: url("images/tail.png");
+    background-repeat: repeat-y;
+    background-size: 100%;
+    margin-left:auto;
+    margin-right:auto;
+    background-attachment:fixed;
+}
+
+ 
+
+/* HEADER */
+
+#header{
+
+    font-weight: bolder;
+    text-decoration: none;
+    height: 35px;
+    width: 100%;
+    box-shadow: 15px 20px 50px rgba(0, 0, 0, 0.5);
+    margin-top: 15px;
+    border:3px solid rgb(255, 255, 255);
+    background-color:rgb(42, 42, 42); 
+    border-radius: 25px;
+    margin-bottom: 50px;
+    text-align: center;
+    order: 1;
+
+
+ 
+}
+
+#link_contener{
+    margin-left: 30px;
+    margin-right: 30px;
+    display: flex;
+    flex-direction:row;
+    justify-content: space-between;
+  
+}
+
+.image_header_icon{
+
+    height: 35px;
+    width: 35px;
+    border: 1px solid white;
+    border-radius: 25px;
+    
+}
+.image_header_icon:hover{
+    height: 40px;
+    width: 40px;
+    transition-delay: 0.1s;
+    transition-duration: 1s;
+
+}
+
+
+
+/* MAIN */
+
+#main{
+    color:white;
+    margin-top:10px;
+    font-size: 15px;
+    min-height: 550px;
+    width: 100%;
+    height: 100%;
+    font-weight: bolder;
+    box-shadow: 15px 20px 50px rgba(0, 0, 0, 0.5);
+    border:3px solid rgb(255, 255, 255);
+    background-color:rgb(42, 42, 42); 
+    border-radius: 25px;
+ 
+ 
+   
+}
+#contener_list{
+    background-color: rgb(42, 42, 42);
+    height: 100px;
+    width: 99.5%;
+    margin-top: 10px;
+    display: inline-flex;
+    flex-direction: row;
+    border: 2px solid white;
+    flex-wrap: nowrap;
+    justify-content:space-around;
+    text-align: center;
+   
+}
+
+
+
+#name_surname_label{
+
+    cursor: pointer;
+}
+#user_online{
+
+    color: rgb(2, 104, 24);
+    font-size: 17px;
+    text-align: center;
+    margin-top:5px;
+    margin-bottom:10px;
+    text-shadow: 3px 3px black;
+
+}
+#user_offline{
+
+    color: rgb(104, 6, 2);
+    font-size: 17px;
+    text-align: center;
+    margin-top:5px;
+    margin-bottom:10px;
+    text-shadow: 3px 3px black;
+
+}
+#rang_style_user{
+    color: rgb(0, 140, 255);
+    font-size: 17px;
+    text-align: center;
+    margin-bottom: 25px;
+    text-shadow: 3px 3px black;
+}
+
+#rang_style_moderator{
+    color: rgb(10, 124, 35);
+    font-size: 17px;
+    text-align: center;
+    margin-bottom: 25px;
+    text-shadow: 3px 3px black;
+}
+
+#rang_style_admin{
+    color: rgb(224, 18, 11);
+    font-size: 17px;
+    text-align: center;
+    margin-bottom: 25px;
+    text-shadow: 3px 3px black;
+}
+#rang_style_headadmin{
+    color: rgb(119, 8, 8);
+    font-size: 17px;
+    text-align: center;
+    margin-bottom: 25px;
+    text-shadow: 3px 3px black;
+}
+
+#user_id_contener{
+     
+    height: 50px;
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 100px;
+}
+#image_user_in_list{
+
+    border-radius: 100px;
+    height: 50px;
+    width: 60px;    
+}
+#user_image_contener{
+    
+    border-radius: 50px;
+    height: 50px;
+    margin-top: auto;
+    margin-left: 50px;
+    margin-bottom: auto;
+    width: 60px;
+}
+#user_name_contener{
+    
+    height: 50px;
+    margin-top: auto;
+    
+    margin-bottom: auto;
+    width: 100px;
+}
+#user_rang_contener{
+   
+    height: 50px;
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 100px;
+}
+#user_status_contener{
+     
+    height: 50px;
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 100px;
+}
+#user_joindate_contener{
+    
+    height: 50px;
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 100px;
+}
+
+
+
+
+
+
+
+
+#contener_for_list{
+
+    width: 800px;
+    height: 750px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    border: 3px solid rgb(68, 68, 68);
+    overflow: auto;
+    background-color: rgba(77, 77, 77, 0.507);
+ }
+
+/* FOOTER */
+#footer{
+    font-weight: bolder;
+    color:white;
+    width: 100%;
+    text-align: center;
+    box-shadow: 15px 20px 50px rgba(0, 0, 0, 0.5);
+    margin-top: 15px;
+    border:3px solid rgb(255, 255, 255);
+    background-color:rgb(42, 42, 42); 
+    border-radius: 25px;
+    order:3;
+
+}

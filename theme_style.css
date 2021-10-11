@@ -239,6 +239,26 @@ body{
 }
 
  
+
+ 
+
+
+ 
+#message_contener{
+   
+    height: auto;
+    width: 100%;
+  
+    margin-top:10px;
+    margin-bottom: 40px;
+    text-align: center;
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: space-around;
+    
+}
+
+
  
 #button_message{
 
@@ -246,37 +266,41 @@ body{
     height: 25px;
     width: 125px;
     color: white;
-     
+    margin-bottom: 15px;
     border:3px solid  rgb(95, 101, 131);
     border-radius: 20px;
-    text-align: center;
-    margin-left: 320px;
-    display: initial;
-    cursor: pointer;
+ 
 }
 
 #button_message:hover{
-  
+    
     background: rgb(56, 56, 56);
     border: 3px solid lightcoral;
     transform: scaleX(1.2);
     transition-duration: 1s;
 }
- 
 
+#radius_contener{
 
- 
-#write_message_contener{
+    margin: auto 0;
    
-    height: 380px;
-    width: 850px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top:10px;
-    margin-bottom: 40px;
-    
-    
 }
+.radio_priority_message{
+    margin: 20px 5px;
+}
+.radio_status_message{
+    margin: 20px 5px;
+}
+#write_message_contener{
+
+    margin: 0 auto;
+    text-align: center;
+    background-color: rgba(138, 138, 138, 0.075);
+    border: 2px solid rgb(0, 0, 0);
+    border-radius: 25px;
+
+}
+
 #label_status_open
 {
     color: rgb(2, 104, 24);

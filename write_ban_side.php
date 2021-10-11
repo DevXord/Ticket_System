@@ -31,7 +31,7 @@
         <meta charset="UTF-8" />
         <title>Write Ticket</title>
         <!-- <link rel="stylesheet" type="text/css" href="write_tickets_style.css" /> -->
-        <link href="write_ban_style.css?<?=filemtime("write_ban_style.css")?>" rel="stylesheet" type="text/css" />
+        <link href="write_tickets_style.css?<?=filemtime("write_tickets_style.css")?>" rel="stylesheet" type="text/css" />
 
         <link rel="icon" href="images\Favicon\side_icon.ico">
         <meta name="description" content="Ticket System" />
@@ -54,6 +54,10 @@
 
                             echo "<a id='user_go_profil' href='profil_side.php'><img class='image_header_icon' title='Profil side' alt='Go back to profil icon' src='$pathi'></a>";
                         }
+                        if($_SESSION['Rangs'] >= 2)
+                            echo' <a id="admin_look_all" href="user_list_side.php"><img class="image_header_icon" title="User list side" alt="Go to user list side icon" src="images/icon_link/profils.png" ></a>';
+                   
+                  
                     
                     ?>
                     
@@ -63,11 +67,9 @@
             </div>
 
             <?php
-                if(isset($_POST['title_text']) &&isset($_POST['text_add']))
+                if(!empty($_GET['ban_reason']) && isset($_GET['ban_user_id']))
                 {
                     require_once "connect_mysql.php";
-
-
 
                     $db = @mysqli_connect($host , $username, $userpassword, $namedb);
                     if(!$db)
@@ -75,26 +77,41 @@
                         
                     else
                     {
-                        $title = $_POST['title_text'];
-                        $textt =  $_POST['text_add'];
-                        $emailt = $_SESSION['uemail'];
-                        $namet = $_SESSION['uname'];
-                        $snamet = $_SESSION['usname'];
-                        $aid = $_SESSION['id'];
-
-                        $datesecond = time(); 
-                        $nowDate = date('Y-m-d', $datesecond);
-
-                        
-                        $sql = "INSERT INTO `ticket_db`(`Date_added`, `Title`, `Author_id`, `Author_name`, `Author_surname`, `Author_email`, `Status`, `Priority`, `Value`) VALUES ('$nowDate','$title','$aid','$namet','$snamet','$emailt','1','0',' $textt')";
-                        
-                        
+                        $bannedid = $_GET['ban_user_id'];
+                        $sql = "SELECT * FROM users_db WHERE ID = '$bannedid'";
                         if($result = $db->query($sql))  
-                             
+                        {
+                        
+                            $user_number = $result->num_rows;
+                            if($user_number = 1)
+                            {
+                                $data = $result->fetch_assoc();
+                                $bemail =  $data['Email'];
+                                $bname =  $data['Name'];
+                                $breson = $_GET['ban_reason'];
+                                $datesecond = time(); 
+                                $nowDate = date('Y-m-d', $datesecond);
+                                $aemail = $_SESSION['uemail'];
+
+                                $sql2 = "INSERT INTO `banned_db`( `Banned_email`, `Banned_name`, `Banned_reason`, `Banned_date`, `Admin_email`) VALUES ('$bemail','$bname','$breson','$nowDate','$aemail')";
+                                
+                                $insertres = $db->query($sql2); 
+                                if($insertres = $db->query($sql))   
+                                {
+                                    
+                                    header("location: profil_side.php");
+                                     
+                                }
+                                
+                               
+                            }
+                            $result->close();
+                        }
+
                         $db->close();
                         
                     }
-                    header("location: ticket_side.php");
+                    
                 }
 
 
@@ -105,18 +122,18 @@
 
 
                 <div id="xcontener">
-
-                    <form action="write_tickets_side.php" method="post">
-                        <div id="write_tickets_contener">
-                            <label class="label_text">Write your title:</label>
-                            <input id="title_input" type="text" name="title_text" maxlength="54">
-                            <label class="label_text">Write your message and clicked send</label>
-                            <textarea id="text_input" name="text_add" maxlength="325"></textarea>
-                            <input id="send_text_input" type="submit" value="Send">
-                        </div>
-                    </form>
-                </div>
-                   
+                    <?php
+                    $s = $_GET["ban_user_id"];
+                    echo '<form action="write_ban_side.php" method="get">';
+                        echo '<div id="write_tickets_contener">';
+                            echo '<label class="label_text">Enter a reason for the ban:</label>';
+                            echo '<input id="title_input" type="text" name="ban_reason" maxlength="50">';
+                            echo '<input type="hidden" name="ban_user_id" value="'.$s.'">';
+                            echo '<input id="send_text_input" type="submit" value="Send">';
+                        echo '</div>';
+                   echo  '</form>';
+                echo '</div>';
+                   ?>
 
                     
             </div>

@@ -39,6 +39,12 @@
 
                             echo "<a id='user_go_profil' href='profil_side.php'><img class='image_header_icon' title='Profil side' alt='Go back to profil icon' src='$pathi'></a>";
                         }
+                     
+                        if($_SESSION['Rangs'] >= 2)
+                            echo' <a id="admin_look_all" href="user_list_side.php"><img class="image_header_icon" title="User list side" alt="Go to user list side icon" src="images/icon_link/profils.png" ></a>';
+                   
+                  
+               
                     
                     ?>
                     <a id="user_go_ticket" href="ticket_side.php"><img class="image_header_icon" title="Ticket side" alt="Go to Ticket side icon" src="images/icon_link/tickets.png" ></a> 
@@ -76,6 +82,68 @@
                         
                     }
                    
+       
+                    if(isset($_POST['radio_priority_form']))
+                    {
+                        if($_SESSION['Rangs'] >= 1)
+                        {
+                            if($_POST['radio_priority_form'] == 1)
+                            {
+                                $priorsql = "UPDATE `ticket_db` SET `Priority`='0' WHERE ID='$tid'";
+                                 
+                                
+                                $db->query($priorsql);
+        
+                            }
+                            elseif($_POST['radio_priority_form'] == 2)
+                            {
+                                $priorsql = "UPDATE `ticket_db` SET `Priority`='1' WHERE ID='$tid'";
+                               
+                                
+                                $db->query($priorsql);
+                            }
+                            elseif($_POST['radio_priority_form'] == 3)
+                            {
+                                $priorsql = "UPDATE `ticket_db` SET `Priority`='2' WHERE ID='$tid'";
+                                
+                                
+                                $db->query($priorsql);
+
+                            }
+                        }
+                    }
+                    if(isset($_POST['radio_status_form']))
+                    { 
+                        if($_SESSION['Rangs'] >= 1)
+                        {
+                            if($_POST['radio_status_form'] == 1)
+                            {
+                                $statrsql = "UPDATE `ticket_db` SET `Status`='1' WHERE ID='$tid'";
+                                 
+                                
+                                $db->query($statrsql);
+
+                                
+                            }
+                            elseif($_POST['radio_status_form'] == 2)
+                            {
+                                $statrsql = "UPDATE `ticket_db` SET `Status`='2' WHERE ID='$tid'";
+                                 
+                                
+                                $db->query($statrsql);
+                              
+                            }
+                            elseif($_POST['radio_status_form'] == 3)
+                            {
+                                $statrsql = "UPDATE `ticket_db` SET `Status`='0' WHERE ID='$tid'";
+                                 
+                                
+                                $db->query($statrsql);
+                                
+                            }
+                        }
+                    }
+
                     $sql = "SELECT * FROM ticket_db WHERE ID = '$tid'";
                   
                             
@@ -90,6 +158,11 @@
                             $aem = $data['Author_email'];
                             $themstat = $data['Status'];
                             echo '<title>' .$data["Title"] .' </title>';
+                        }
+                        else
+                        {
+
+                            header('location: profil_side.php');
                         }
                         $resultr->close();
                     }
@@ -131,6 +204,17 @@
                                 }
                                 $admquert->close(); 
                             }
+
+
+                            if($banquery = $db->query("SELECT * FROM banned_db WHERE Banned_email = '$aem'"))
+                            {
+                                 
+                                $ban_num = $banquery->num_rows;
+                                if($ban_num == 1)
+                                    $urangs = 4;
+                                
+                                $banquery->close(); 
+                            }
                             echo '<div id = "option_contener">';
                             echo '<div id = "profil_contener">';
                                 
@@ -145,7 +229,7 @@
                                     echo '<div id = "profil_information">';
                                         // $uid;
                                     
-                                        echo '<input  name="author_email"  type="hidden" value="'.$aem.'" /> ';
+                                        echo '<input  name="author_id"  type="hidden" value="'.$uid.'" /> ';
 
                                         switch($urangs)
                                         {
@@ -165,6 +249,10 @@
                                             case 3: 
                                                 echo  ' <label id="user_name_hadmin_label">'. $uname." ".$usurname.'</label>';
                                                 echo  " <label id='rang_style_headadmin'>Head Administrator</label>";
+                                                break;
+                                            case 4: 
+                                                echo  ' <label id="user_name_hadmin_label">'. $uname." ".$usurname.'</label>';
+                                                echo  " <label id='rang_style_headadmin'>Banned</label>";
                                                 break;
                                         
                                         
@@ -297,7 +385,17 @@
                                                         }
                                                         $admquert->close(); 
                                                     }
-
+                                                  
+                                                
+                                                    if($banquery = $db->query("SELECT * FROM banned_db WHERE Banned_email = '$aem'"))
+                                                    {
+                                                             
+                                                        $ban_num = $banquery->num_rows;
+                                                         if($ban_num == 1)
+                                                            $urangs = 4;
+                                                            
+                                                        $banquery->close(); 
+                                                    }
                                             
                                                     
                                                    
@@ -323,7 +421,10 @@
                                                             echo  ' <label id="user_name_hadmin_label">'. $uname." ".$usurname.'</label>';
                                                             echo  " <label id='rang_style_headadmin'>Head Administrator</label>";
                                                             break;
-                                                    
+                                                        case 4: 
+                                                            echo  ' <label id="user_name_hadmin_label">'. $uname." ".$usurname.'</label>';
+                                                            echo  " <label id='rang_style_headadmin'>Banned</label>";
+                                                            break;
                                                     
                                                     }
                                             
@@ -381,41 +482,97 @@
                     if($themstat == 1)
                     {
                         
+                       
                         echo '<div id = "write_message_contener">';
                             
                             echo '<form  name="send_message_forms"  action="theme_side.php?id_theme='.$tid.'" method="post">';
-                                echo '<div id = "message_contener">';
-                                    echo '<textarea id="text_message" type="text" maxlength="325" name="send_text"></textarea>';
-                                 
+                                echo '<div id = "write_message_contener">';
+                                    echo '<div id = "message_contener">';
+                                        echo '<textarea id="text_message" type="text" maxlength="325" name="send_text"></textarea>';
 
-                                 
+                                            if($_SESSION['Rangs'] >= 1)
+                                            {
+                                                echo '<div id = "radius_contener">';
+                                                    echo '<label>Priority:</label> ';
+                                                    echo '<div id = "radius_center_contener">';
+                                                    echo '<input class="radio_priority_message" type="radio"  value="1" name="radio_priority_form"/>';
+                                                    echo '<label for"radio_priority_form">Low</label> ';
+                                                    echo '<input class="radio_priority_message" type="radio"  value="2" name="radio_priority_form"/>';
+                                                    echo '<label for"radio_priority_form">Medium</label> ';
+                                                    echo '<input class="radio_priority_message" type="radio" value="3"  name="radio_priority_form"/>';
+                                                    echo '<label for"radio_priority_form">High</label> ';
+                                                    echo '</div>';
+
+                                                    echo '<label>Status:</label> ';
+                                                    echo '<div id = "radius_center_contener">';
+                                                    echo '<input  class="radio_status_message" type="radio" value="1"   name="radio_status_form"/>';
+                                                    echo '<label for"radio_status_form">Open</label> ';
+                                                    echo '<input  class="radio_status_message" type="radio" value="2"  name="radio_status_form"/>';
+                                                    echo '<label for"radio_status_form">Answered</label> ';
+                                                    echo '<input class="radio_status_message" type="radio"  value="3" name="radio_status_form"/>';
+                                                    echo '<label for"radio_status_form">Close</label> ';
+                                                    echo '</div>';
+                                                echo '</div>';
+                                            }
+
+                                    
+                                        
+                                    echo '</div>';
                                     echo '<input id="button_message" type="submit" value="Send" name="send_button"/>';
+                                    echo '<input name="id_theme" value="'.$tid.'" type="hidden">';
                                 echo '</div>';
                             echo '</form>';
-                        
-                        echo '</div>';
-            
+                    
+                   
+        
                         echo '</div>';
                     }
-                    if($themstat == 2 && $urangs >= 2)
+                    if($themstat == 2 && $_SESSION['Rangs'] >= 2)
                     {
 
+                         
                         echo '<div id = "write_message_contener">';
-                                
+                            
                             echo '<form  name="send_message_forms"  action="theme_side.php?id_theme='.$tid.'" method="post">';
-                                echo '<div id = "message_contener">';
-                                    echo '<textarea id="text_message" type="text" maxlength="325" name="send_text"></textarea>';
-                                     
-                                
-                                  
+                                echo '<div id = "write_message_contener">';
+                                    echo '<div id = "message_contener">';
+                                        echo '<textarea id="text_message" type="text" maxlength="325" name="send_text"></textarea>';
+
+                                            if($_SESSION['Rangs'] >= 1)
+                                            {
+                                                echo '<div id = "radius_contener">';
+                                                    echo '<label>Priority:</label> ';
+                                                    echo '<div id = "radius_center_contener">';
+                                                    echo '<input class="radio_priority_message" type="radio"  value="1" name="radio_priority_form"/>';
+                                                    echo '<label for"radio_priority_form">Low</label> ';
+                                                    echo '<input class="radio_priority_message" type="radio"  value="2" name="radio_priority_form"/>';
+                                                    echo '<label for"radio_priority_form">Medium</label> ';
+                                                    echo '<input class="radio_priority_message" type="radio" value="3"  name="radio_priority_form"/>';
+                                                    echo '<label for"radio_priority_form">High</label> ';
+                                                    echo '</div>';
+
+                                                    echo '<label>Status:</label> ';
+                                                    echo '<div id = "radius_center_contener">';
+                                                    echo '<input  class="radio_status_message" type="radio"  value="1"  name="radio_status_form"/>';
+                                                    echo '<label for"radio_status_form">Open</label> ';
+                                                    echo '<input  class="radio_status_message" type="radio" value="2"  name="radio_status_form"/>';
+                                                    echo '<label for"radio_status_form">Answered</label> ';
+                                                    echo '<input class="radio_status_message" type="radio"  value="3" name="radio_status_form"/>';
+                                                    echo '<label for"radio_status_form">Close</label> ';
+                                                    echo '</div>';
+                                                echo '</div>';
+                                            }
+
+                                    
+                                        
+                                    echo '</div>';
                                     echo '<input id="button_message" type="submit" value="Send" name="send_button"/>';
-                                   
-                                
+                                    echo '<input name="id_theme" value="'.$tid.'" type="hidden">';
                                 echo '</div>';
                             echo '</form>';
-                        
-                        echo '</div>';
-            
+                    
+                   
+        
                         echo '</div>';
                     }
 

@@ -40,6 +40,13 @@
                             echo "<a id='user_go_profil' href='profil_side.php'><img class='image_header_icon' title='Profil side' alt='Go back to profil icon' src='$pathi'></a>";
                         }
                     
+
+                    
+                        if($_SESSION['Rangs'] >= 2)
+                            echo' <a id="admin_look_all" href="user_list_side.php"><img class="image_header_icon" title="User list side" alt="Go to user list side icon" src="images/icon_link/profils.png" ></a>';
+                   
+                  
+                   
                     ?>
                     <a id="user_go_ticket" href="ticket_side.php"><img class="image_header_icon" title="Ticket side" alt="Go to Ticket side icon" src="images/icon_link/tickets.png" ></a> 
                     <a class="user_logout" href="logout.php"> <img class="image_header_icon" title="Log out"  alt="Log out icon" src="images/icon_link/logout.png"></a>
@@ -52,8 +59,9 @@
                         
                 <?php
                     echo '<div id = "user_left_contener">';
-                        $suemail = $_GET["author_email"];
-                        $Uid;$Uname;$Usurname;$Ujdate;$Uimgurl;$Urangs;$Uonline;
+                        $Uid = $_GET["author_id"];
+                        
+                        $suemail;$Uname;$Usurname;$Ujdate;$Uimgurl;$Urangs;$Uonline;
                         require_once "connect_mysql.php";
                         $db = @mysqli_connect($host , $username, $userpassword, $namedb);
                         if(!$db)
@@ -61,7 +69,7 @@
                         else
                         {
                             
-                            $sql = "SELECT * FROM users_db WHERE Email = '$suemail'";
+                            $sql = "SELECT * FROM users_db WHERE ID = '$Uid'";
 
                             if($result = $db->query($sql))
                             {
@@ -69,13 +77,18 @@
                                 if($tcket_number == 1)
                                 {
                                     $data = $result->fetch_assoc();
-                                    $Uid = $data['ID'];
+                                    $suemail = $data['Email'];
                                     $Uname = $data['Name'];
                                     $Usurname = $data['Surname'];
                                     $Ujdate = $data['Join_Date'];
                                     $Uimgurl = $data['Images_url'];
                                     $Uonline = $data['Online'];
 
+                                }
+                                else
+                                {
+        
+                                    header('location: profil_side.php');
                                 }
 
                                 $result->close();
@@ -105,9 +118,16 @@
                                 echo "<img id= 'user_photo_profil_id'  title='Your photo' alt='User photo' src='$pathi'>";
                             }
 
-                           
+                            $bsql = "SELECT * FROM banned_db WHERE Banned_email = '$suemail'";
 
-
+                            if($banresult = $db->query($bsql))
+                            {
+                                $ban_number = $banresult->num_rows;
+                                if($ban_number == 1)
+                                {
+                                    $Urangs=4;
+                                }
+                            }
                             switch($Urangs)
                             {
                             
@@ -123,10 +143,13 @@
                                 case 3: 
                                     echo  " <label id='rang_style_headadmin'>Head Administrator</label>";
                                     break;
+                                case 4: 
+                                    echo  " <label id='rang_style_headadmin'>BANNED</label>";
+                                    break;
                                 
                                 
                             }
-                                                echo "<label>Status:</label>";
+                            echo "<label>Status:</label>";
 
         
                             if($Uonline != 0)
@@ -141,8 +164,27 @@
                             echo '<label id="user_join_date">'. $Ujdate .'</label>';
 
 
+                            echo '<form name="user_control_form" action="write_ban_side.php" method="get">';
+                            
+                          
+                            if($_SESSION['Rangs'] > 1 && $Uid != $_SESSION['id'])
+                            {
+                                if($Urangs != 4)
+                                    echo '<input class="button_user" name="ban_user" type="submit" value="Banned">';
+                            }
 
 
+                            echo '<input name="ban_user_id" type="hidden" value="'.$Uid .'">';
+                            echo '</form>'; 
+
+                            echo '<form name="user_unban_form" action="unban.php" method="get">';
+                            
+                            if($Urangs == 4 && $_SESSION['Rangs'] == 3)
+                                echo '<input class="button_user" name="unban_user" type="submit" value="Unban">';
+
+                            echo '<input name="ban_user_id" type="hidden" value="'.$Uid .'">';
+                            echo '<input name="ban_user_email" type="hidden" value="'.$suemail .'">';
+                            echo '</form>'; 
                             $db->close();
                         }
 

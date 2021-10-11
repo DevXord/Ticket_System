@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 09 Paź 2021, 08:02
+-- Czas generowania: 11 Paź 2021, 17:16
 -- Wersja serwera: 10.4.21-MariaDB
 -- Wersja PHP: 8.0.10
 
@@ -52,8 +52,8 @@ CREATE TABLE `banned_db` (
   `ID` int(11) NOT NULL,
   `Banned_email` varchar(50) NOT NULL,
   `Banned_name` varchar(24) NOT NULL,
-  `Banned_reason` text NOT NULL,
-  `Banned_time` int(11) NOT NULL,
+  `Banned_reason` varchar(50) NOT NULL,
+  `Banned_date` varchar(30) NOT NULL,
   `Admin_email` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -96,6 +96,7 @@ CREATE TABLE `ticket_db` (
   `ID` int(11) NOT NULL,
   `Date_added` varchar(30) NOT NULL,
   `Title` varchar(54) NOT NULL,
+  `Author_id` int(11) NOT NULL,
   `Author_name` varchar(24) NOT NULL,
   `Author_surname` varchar(24) NOT NULL,
   `Author_email` varchar(30) NOT NULL,
@@ -118,7 +119,6 @@ CREATE TABLE `users_db` (
   `Password` varchar(24) NOT NULL,
   `Join_Date` date NOT NULL DEFAULT current_timestamp(),
   `Images_url` text NOT NULL,
-  `Warning` int(11) NOT NULL,
   `Online` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -126,11 +126,11 @@ CREATE TABLE `users_db` (
 -- Zrzut danych tabeli `users_db`
 --
 
-INSERT INTO `users_db` (`ID`, `Name`, `Surname`, `Email`, `Password`, `Join_Date`, `Images_url`, `Warning`, `Online`) VALUES
-(1, 'root', 'root', 'root@root.com', 'xxxxxx', '2021-10-09', '', 0, 0),
-(2, 'Admin', 'Admin', 'admin@admin.com', 'xxxxxx', '2021-10-09', '', 0, 0),
-(3, 'Moder', 'Moderator', 'moderator@moderator.com', 'xxxxxx', '2021-10-09', '', 0, 0),
-(4, 'Jacek', 'Soplica', 'jsoplica@gmail.com', 'xxxxxx', '2021-10-09', '', 0, 0);
+INSERT INTO `users_db` (`ID`, `Name`, `Surname`, `Email`, `Password`, `Join_Date`, `Images_url`, `Online`) VALUES
+(1, 'root', 'root', 'root@root.com', 'xxxxxx', '2021-10-09', 'IMG-1-PROFILPHOTO.png', 0),
+(2, 'Admin', 'Admin', 'admin@admin.com', 'xxxxxx', '2021-10-09', '', 0),
+(3, 'Moder', 'Moderator', 'moderator@moderator.com', 'xxxxxx', '2021-10-09', '', 0),
+(4, 'Jacek', 'Soplica', 'jsoplica@gmail.com', 'xxxxxx', '2021-10-09', '', 0);
 
 --
 -- Indeksy dla zrzutów tabel

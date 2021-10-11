@@ -41,7 +41,7 @@
         <div id="contener">
 
             <?php
-                
+           
                 include_once "connect_mysql.php";
                 if(isset($_POST['password_input']) || isset($_POST['rpassword_input']) || isset($_POST['name_input']) || isset($_POST['sname_input']) || isset($_POST['email_input']) || isset($_POST['photo_input']))
                 {
@@ -213,7 +213,12 @@
                 <div id="link_contener">
                     <a id="user_go_ticket" href="ticket_side.php"><img class="image_header_icon" title="Ticket side" alt="Go to Ticket side icon" src="images/icon_link/tickets.png" ></a>
                    
+                    <?php 
+                        if($_SESSION['Rangs'] >= 2)
+                            echo' <a id="admin_look_all" href="user_list_side.php"><img class="image_header_icon" title="User list side" alt="Go to user list side icon" src="images/icon_link/profils.png" ></a>';
+                   
                   
+                    ?>
                    
                     <a class="user_logout" href="logout.php"> <img class="image_header_icon" title="Log out"  alt="Log out icon" src="images/icon_link/logout.png"></a>
                 </div>
