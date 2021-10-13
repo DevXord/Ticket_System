@@ -66,17 +66,29 @@
 
                       
 
+                        <?php 
 
+                        echo '<form id="form_select"  action="ticket_side.php" method="post">';
+                     
 
-                        
-                        <label class="label_class" for="user_check" id="user_check_all"><input type="checkbox" id="all_user_checkbox" name="all_user_checkbox"></label>
-                        <label class="label_class" id="user_name_click">Ticket ID</label>
-                        <label class="label_class" id="user_name_click">User</label>
-                        <label class="label_class" id="user_ticket_click">Ticket</label>
-                        <label class="label_class" id="user_date_click">Date added</label>
-                        <label class="label_class" id="user_status_click">Status</label>
-                        <label class="label_class" id="user_priority_click">Priority</label>
-                    
+                        echo '</form>'; 
+                   
+                            echo '<input form="form_select" class="label_class" name="click_checkall" type="submit" value="Check all"/>';
+                          
+                            echo '<input type="submit" form="form_select" name="click_id" class="label_class"  value="ID"/>';
+                          
+                            echo '<input type="submit" form="form_select" name="click_user" class="label_class"   value="User"/>';
+                          
+                            echo '<input type="submit" form="form_select" name="click_tit" class="label_class"   value="Title"/>';
+                         
+                            echo '<input type="submit" form="form_select" name="click_date" class="label_class"   value="Date added"/>';
+                         
+                            echo '<input type="submit" form="form_select" name="click_ststus" class="label_class" value="Status"/>';
+                      
+                            echo '<input type="submit" form="form_select" name="click_priorit" class="label_class"  value="Priority"/>';
+                      
+                         
+                        ?>
                     </div>      
                     
 
@@ -85,7 +97,8 @@
                         <?php
                             $listtickets = [];
                             $listuser = [];
-                            $_SESSION['checked_list'] = [];
+                          
+                            
                             require_once "connect_mysql.php";
                             $db = @mysqli_connect($host , $username, $userpassword, $namedb);
                             if(!$db)
@@ -93,14 +106,132 @@
                             else
                             {
                                 $aemail = $_SESSION['uemail'];
-                             
-                              
+
+                                if(isset($_POST['click_checkall']))
+                                {
+                                    if($_SESSION['checkcl'] == false)
+                                    {
+                                        $_SESSION['checkcl'] = true;
+                                    }
+                                    else
+                                    {
+                                        $_SESSION['checkcl'] = false;
+                                    }
+                                }
                                 
-                                if($_SESSION['Rangs'] >= 1)
-                                    $usql = "SELECT * FROM `ticket_db`";
+                                if(isset($_POST['click_id']))
+                                    if( $_SESSION['cliid'] == true) 
+                                    {
+                                        $usql = "SELECT * FROM `ticket_db` ORDER BY ID DESC";
+                                        $_SESSION['cliid'] = false;
+                                    }
+                                    else
+                                    {
+                                        $usql = "SELECT * FROM `ticket_db` ORDER BY ID";
+                                        $_SESSION['cliid'] = true;
+                                    }
+                                elseif(isset($_POST['click_user']))
+                                    if( $_SESSION['aunam'] == true) 
+                                    {
+                                        $usql = "SELECT * FROM `ticket_db` ORDER BY Author_name DESC";
+                                        $_SESSION['aunam'] = false;
+                                    }
+                                    else
+                                    {
+                                        $usql = "SELECT * FROM `ticket_db` ORDER BY Author_name";
+                                        $_SESSION['aunam'] = true;
+                               
+                                       
+                                    }
+                                elseif(isset($_POST['click_tit']))
+                                    if( $_SESSION['tits'] == true) 
+                                    {
+                                        $usql = "SELECT * FROM `ticket_db` ORDER BY Title DESC";
+                                        $_SESSION['tits'] = false;
+                                         
+                                    }
+                                    else
+                                    {
+                                        $usql = "SELECT * FROM `ticket_db` ORDER BY Title";
+                                        $_SESSION['tits'] = true;
+                                        
+                                    }
+                                elseif(isset($_POST['click_date']))
+                                    if($_SESSION['datas'] == true) 
+                                    {
+                                        $usql = "SELECT * FROM `ticket_db` ORDER BY Date_added DESC";
+                                        $_SESSION['datas'] = false;
+                                    }
+                                    else
+                                    {
+                                        $usql = "SELECT * FROM `ticket_db` ORDER BY Date_added";
+                                        $_SESSION['datas'] = true;
+                                    }
+                                elseif(isset($_POST['click_ststus']))
+                                    if($_SESSION['status'] == true)
+                                    {
+                                        $usql = "SELECT * FROM `ticket_db` ORDER BY Status DESC";          
+                                        $_SESSION['status'] = false;
+                                    }
+                                    else
+                                    {
+                                        $usql = "SELECT * FROM `ticket_db` ORDER BY Status"; 
+                                        $_SESSION['status'] = true;
+                                    }
+                                elseif(isset($_POST['click_priorit']))
+                                    if($_SESSION['priorit'] == true)
+                                    {
+                                        $usql = "SELECT * FROM `ticket_db` ORDER BY Priority DESC"; 
+                                        $_SESSION['priorit'] = false;
+                                    }
+                                    else
+                                    {
+                                        $usql = "SELECT * FROM `ticket_db` ORDER BY Priority"; 
+                                        $_SESSION['priorit'] = true;
+                                    }
+                                elseif(isset($_POST['radio_user']))
+                                {
+                                    $serch = $_POST['search_ticket_text'];
+                                     
+                                    if($_POST['radio_user'] == 1)
+                                    {
+                                        if(!empty($serch))
+                                            $usql = "SELECT * FROM `ticket_db` WHERE Author_name LIKE '$serch%'";
+                                        else
+                                            $usql = "SELECT * FROM `ticket_db` ORDER BY Author_name DESC";
+
+                                    }
+                                    if($_POST['radio_user'] == 2)
+                                    {
+                                        if(!empty($serch))
+                                            $usql = "SELECT * FROM `ticket_db` WHERE Title LIKE '$serch%'";
+                                        else
+                                            $usql = "SELECT * FROM `ticket_db` ORDER BY Title DESC";
+
+                                    }
+                                    if($_POST['radio_user'] == 3)
+                                    {
+                                        if(!empty($serch))
+                                            $usql = "SELECT * FROM `ticket_db` WHERE ID = '$serch'";
+                                        else
+                                            $usql = "SELECT * FROM `ticket_db` ORDER BY ID DESC";
+
+                                    }
+
+
+
+                                }
                                 else
-                                    $usql = "SELECT * FROM `ticket_db` WHERE Author_email = '$aemail'";
+                                {
+                                    if($_SESSION['Rangs'] >= 1)
+                                        $usql = "SELECT * FROM `ticket_db` ORDER BY ID DESC";
+                                    else
+                                        $usql = "SELECT * FROM `ticket_db` WHERE Author_email = '$aemail' ORDER BY ID DESC";
                             
+                                }
+                                
+                                 
+                             
                                 if($result = $db->query($usql))
                                 {
                                     $tcket_number = $result->num_rows;
@@ -137,10 +268,22 @@
                                     }
                                     $result->close();
                                 }
-                            
-                               
-                               
-                                echo '<form id="delete_form" action="ticket_side.php" method="get">';
+                             
+                                foreach ($listtickets  as $item) {
+                                    if(isset($_POST['checkeds-'.$item["ID"].'']))
+                                    {
+                                        
+                                        $delid=$item["ID"];
+                                        $delsql = "DELETE FROM `ticket_db` WHERE ID = '$delid'";
+                                        $db->query($delsql);
+                                 
+                                        unset($listtickets[$item['ID']]);
+                                    }
+
+                                }
+ 
+ 
+                                echo '<form id="delete_form" action="ticket_side.php" method="post">';
                                            
                                 echo '</form>';
                                 foreach ($listtickets  as $item) {
@@ -149,19 +292,26 @@
                                     echo '<div id="ticket_list">';
                                       
                                             
-                                
-                                            echo '<input form="delete_form" type="checkbox" "id="user_checkbox" value="'.$item["ID"].'" name="checkeds-'.$item["ID"].'">';
+                                        echo '<div id="contener_checkbox">';
 
-                                           
-                                         
-                                           
-                                          
-                            
-                                     
-    
+                                    
+                                        if($_SESSION['checkcl'] == true)
+                                        {
+                                            echo '<input form="delete_form" type="checkbox" "id="user_checkbox" value="'.$item["ID"].'" name="checkeds-'.$item["ID"].'"checked>';
+                                                
+                                        }
+                                        else
+                                        {
+                                            echo '<input form="delete_form" type="checkbox" "id="user_checkbox" value="'.$item["ID"].'" name="checkeds-'.$item["ID"].'">';
+                                             
+                                        }
+                                        
+
+                                        echo '</div>';
+                                        echo '<div id="contener_ticid">';
                                         echo '<label class="label_class_in_list"  id="user_id">'.$item["ID"].'</label>';
                                       
-                                        
+                                        echo '</div>';
                                     
                                     
                                         
@@ -177,17 +327,18 @@
                                                     echo '<input name ="image_inputs"type="image" id="image_user_in_list"  src="'.$srcim.'" alt="Submit Form"/>';
                                                 
                 
-                                                
-                                                    
-                                                    echo '<label id="surname_label" >'.$listuser[$item['Author_id']]["Name"].'</label>';
-                                                    echo '<label id="name_label" >'.$listuser[$item['Author_id']]["Surname"].'</label>';
-                                                
+    
+                                             
+                                                    echo '<label class="label_class_in_list" id="name_label" >'.$listuser[$item['Author_id']]["Name"].'</label><br>';
+                                                    echo '<label class="label_class_in_list" id="sname_label" >'.$listuser[$item['Author_id']]["Surname"].'</label><br>';
+                                                    echo '<label class="label_class_in_list"  id="email_label">'.$listuser[$item['Author_id']]["Email"]. '</label>';
+                                              
                                                     echo '<input name="author_id" type="hidden" value="'.$listuser[$item['Author_id']]['ID'].'">';
                                                 echo '</form>';
                                                 
          
                                             
-                                                echo '<label  id="email_label">'.$listuser[$item['Author_id']]["Email"]. '</label>';
+                                               
                                             
                                         
         
@@ -198,40 +349,41 @@
         
         
         
-        
+                                            echo '<div id="contener_title">';
 
-                                            $s = "'Thema-".$item['ID']."'";
-                                            echo '<form name ='. $s.' action="theme_side.php" method="get">';
+                                                $s = "'Thema-".$item['ID']."'";
                                                 
-                                        
-                                                echo '<input name="id_theme" type="hidden" value="'. $item["ID"].'">';
-                        
-                                                echo '<a id = "user_ticket" onclick="document.forms['.$s.'].submit();">'.$item["Title"].'</a>';
+                                                echo '<form name ='. $s.' action="theme_side.php" method="get">';
+                                                    
+                                            
+                                                    echo '<input name="id_theme" type="hidden" value="'. $item["ID"].'">';
+                            
+                                                    echo '<a id = "user_ticket" onclick="document.forms['.$s.'].submit();">'.$item["Title"].'</a>';
                                                 echo '</form>';
+                                            
+                                            echo '</div>';
+                                            echo '<div id="contener_date">';
+                                                echo '<label class="label_class_in_list"  id="user_date">'.$item["Date_added"].'</label>';
                                         
-        
-        
-                                            echo '<label class="label_class_in_list"  id="user_date">'.$item["Date_added"].'</label>';
-                                        
-                                     
+                                            echo '</div>';
                                    
                                      
-                                     
+                                        echo '<div id="contener_status">';
                                          switch($item["Status"])
                                          {
                                             case 0:
-                                                 echo '<label class="label_class_in_list"  id="user_status"><img src="images\Theme_status\closed.png" id="image_status_icon" title="Status" alt="Status icon"></label>';
+                                                 echo '<label class="label_class_in_list"  id="user_status_close">Close</label>';
                                                  break;
                                             case 1:
-                                                 echo '<label class="label_class_in_list"  id="user_status"><img src="images\Theme_status\open.png" id="image_status_icon" title="Status" alt="Status icon"></label>';
+                                                 echo '<label class="label_class_in_list"  id="user_status_open">Expectancy</label>';
                                                  break;
                                           
                                             case 2:
-                                                 echo '<label class="label_class_in_list"  id="user_status"><img src="images\Theme_status\answered.png" id="image_status_icon" title="Status" alt="Status icon"></label>';
+                                                 echo '<label class="label_class_in_list"  id="user_status_ans">Answered</label>';
                                                  break;
                                          }
-                                       
-           
+                                         echo '</div>';
+                                         echo '<div id="contener_priority">';
                                          switch($item["Priority"])
                                         {
                                             case 0:
@@ -244,7 +396,7 @@
                                                 echo '<label class="label_class_in_list" id="user_priority_hight">Hight</label>';
                                                 break;
                                         }
-                                      
+                                        echo '</div>';
                                                        
                                
                                      
@@ -275,18 +427,26 @@
                 
 
                 <div id="button_contener"> 
-                    <a href="write_tickets_side.php"> <input class="button_ticket" id="add_ticket_bt" type="button" value="Add new ticket" title="Added" alt="Add new ticket" name="add_ticket_button"></a>
-                     
+                    <div id="button_add_contener"> 
+                        <a href="write_tickets_side.php"> <input class="button_ticket" id="add_ticket_bt" type="button" value="Add new ticket" title="Added" alt="Add new ticket" name="add_ticket_button"></a>
+                    </div>
                 
-                     
-                    <button class="button_ticket" id="delete_ticket_bt" form="delete_form"  type="submit">Delete ticket</button>
                 
-                    <form herf="#" action="ticket_side.php" name="serch_form" method="post">   
-                        <input class="text_ticket" id="search_ticket_tx" type="search" placeholder="Write a keyword" name="search_ticket_text">
-                        <input class="radio_ticket" id="search_user__radio"type="radio" name="radio_user">  <label for="radio_user">User</label>
-                        <input class="radio_ticket" id="search_tickets_radio"type="radio"   name="radio_user"> <label for="radio_user">Tickets</label>
-                     </form>
-
+                    <div id="button_delete_contener"> 
+                        <button class="button_ticket" id="delete_ticket_bt" form="delete_form"  type="submit">Delete ticket</button>
+                    </div>
+                    
+                        <form herf="#" action="ticket_side.php" name="serch_form" method="post"> 
+                            <div id="serch_form_contener">   
+                                <input class="text_ticket" id="search_ticket_tx" type="search" placeholder="Write a keyword" name="search_ticket_text">
+                            </div>
+                            <div id="radio_form_contener"> 
+                                <input class="radio_ticket" value="1" id="search_user_radio"type="radio" name="radio_user">  <label for="radio_user">User</label>
+                                <input class="radio_ticket" value="2" id="search_tickets_radio"type="radio" name="radio_user"> <label for="radio_user">Title</label>
+                                <input class="radio_ticket" value="3" id="search_tickets_radio"type="radio" name="radio_user"> <label for="radio_user">ID</label>
+                            </div>
+                        </form>
+                    
                 </div>
                 
              

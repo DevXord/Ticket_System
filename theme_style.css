@@ -215,7 +215,7 @@ body{
     color: rgb(255, 8, 0);
     margin-left: 150px;
 }
-#text_message{
+#text_message, #text_edit_message, #text_edit_message_msq{
 
     background:rgb(0, 0, 0);
     font-size: 22px;
@@ -259,7 +259,11 @@ body{
 }
 
 
- 
+
+#submit_edits_msg_button,
+#edits_msq_button,
+#submit_edits_button,
+#edits_button,
 #button_message{
 
     background:rgb(0, 0, 0);
@@ -272,6 +276,10 @@ body{
  
 }
 
+#submit_edits_msg_button:hover,
+#edits_msq_button:hover,
+#submit_edits_button:hover,
+#edits_button:hover,
 #button_message:hover{
     
     background: rgb(56, 56, 56);
@@ -279,7 +287,8 @@ body{
     transform: scaleX(1.2);
     transition-duration: 1s;
 }
-
+#edits_msq_button,
+#edits_button{margin-left: 80%;;margin-right: 10px;}
 #radius_contener{
 
     margin: auto 0;

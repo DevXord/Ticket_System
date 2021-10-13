@@ -84,7 +84,14 @@
 
                             $_SESSION['upass'] =  $data['Password'];
                             $_SESSION['jdate'] =  $data['Join_Date'];
-                            
+                            $_SESSION['priorit'] =true;
+                            $_SESSION['status'] =true;
+                            $_SESSION['datas'] =true;
+                            $_SESSION['tits'] =true;
+                            $_SESSION['aunam'] =true;
+                            $_SESSION['cliid'] = true;
+                            $_SESSION['checkcl'] = true;
+
 
                             if($data['Images_url'] == NULL)
                                 $_SESSION['img'] = NULL;

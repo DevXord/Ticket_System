@@ -110,19 +110,24 @@
                                            
                                             
                                             $fileType = substr($fileT,6);
-
+                                        
                                             $npatch = "User_profils/" .$_SESSION["id"]."/IMG-".$_SESSION["id"]."-PROFILPHOTO.".$fileType;
                                             $dbimg = "IMG-".$_SESSION['id']."-PROFILPHOTO.".$fileType;
                                          
                                             
                                             if(file_exists($npatch))
                                             {
-                                                unlink($npatch);
-                                            }
 
-                                            if(!file_exists("User_profils/" .$_SESSION["id"]."/"))
-                                            {
+                                                unlink($npatch);
+                                                rmdir("User_profils/" .$_SESSION["id"]);
                                                 mkdir("User_profils/" .$_SESSION["id"]."/",0777,true);
+                                              
+                                            }
+                                            else
+                                            {
+
+                                                mkdir("User_profils/" .$_SESSION["id"]."/",0777,true);
+                                              
                                             }
                                             
                                             copy($fileTMPName,$npatch);
@@ -131,12 +136,15 @@
                                             $_SESSION['img'] = $dbimg;
                                           
 
-                                            $send = "UPDATE `users_db` SET `Images_url`='$dbimg' WHERE `Email`= '$userem'";
+                                            $send = "UPDATE users_db SET Images_url='$dbimg' WHERE Email= '$userem'";
                                             $resultx = $db->query($send);
                                             echo '<br><div id="info_contener"> info: User icon has been successfully changed!</div><br>';
-                                            $nphot = NULL;
-
-                                             
+                                            $nphot = '';
+                                            $fileName='';
+                                            $fileT='';
+                                            $fileTMPName='';
+                                            $fileError='';
+                                            $fileSize='';
 
                                         }
                                         else

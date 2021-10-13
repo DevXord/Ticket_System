@@ -24,7 +24,7 @@
                 $sql = "DELETE FROM `banned_db` WHERE Banned_email = '$ubemail'";
                 $banresult = $db->query($sql);
               
-                header("location: profil_user.php?author_id=".$_GET['ban_user_email']."");
+                header("location: profil_user.php?author_id=".$_GET['ban_user_id']."");
                 $db-close();
             }
         }

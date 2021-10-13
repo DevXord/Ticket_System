@@ -71,7 +71,15 @@ body{
 }
 
 
+#contener_radio_rangs{
 
+    display: inline-flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: left;
+ 
+   
+}
 
 .button_user{
 

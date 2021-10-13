@@ -59,7 +59,10 @@
                         
                 <?php
                     echo '<div id = "user_left_contener">';
-                        $Uid = $_GET["author_id"];
+
+                        if(!empty($_GET["author_id"]))
+                            $Uid = $_GET["author_id"];
+                        
                         
                         $suemail;$Uname;$Usurname;$Ujdate;$Uimgurl;$Urangs;$Uonline;
                         require_once "connect_mysql.php";
@@ -68,9 +71,12 @@
                             echo '<br><div id="error_contener"> Warning: Database not connected!</div><br>';
                         else
                         {
+
+
+                          
                             
                             $sql = "SELECT * FROM users_db WHERE ID = '$Uid'";
-
+                            
                             if($result = $db->query($sql))
                             {
                                 $tcket_number = $result->num_rows;
@@ -93,6 +99,105 @@
 
                                 $result->close();
                             }
+
+                            if(isset($_POST['radio_rangs']))
+                            {
+                                $rsql = "SELECT * FROM admins_db WHERE Email = '$suemail'";
+
+                                if($_POST['radio_rangs'] == 0)
+                                {
+                                    
+
+                                    if($rangresult = $db->query($rsql))
+                                    {
+                                        $rangs_number = $rangresult->num_rows;
+                                        if($rangs_number == 1)
+                                        {
+                                        
+                                            $drsql = "DELETE FROM `admins_db` WHERE Email = '$suemail'";
+
+                                            $db->query($drsql);
+                                        }
+                                        $rangresult->close();
+                                    }
+                                }
+                                if($_POST['radio_rangs'] == 1)
+                                {
+                                    
+
+                                    if($rangresult = $db->query($rsql))
+                                    {
+                                        $rangs_number = $rangresult->num_rows;
+                                        if($rangs_number == 1)
+                                        {
+                                        
+                                            $drsql = "UPDATE `admins_db` SET `Rang_strong`='1' WHERE Email = '$suemail'";
+                                             
+                                            $db->query($drsql);
+                                        }
+                                        else
+                                        {
+                                            $drsql = "INSERT INTO `admins_db`(`Email`, `Rang_strong`) VALUES ('$suemail','1')";
+                                             
+                                            $db->query($drsql);
+                                        }
+                                        $rangresult->close();
+                                    }
+                                }
+                                if($_POST['radio_rangs'] == 2)
+                                {
+                                    
+
+                                    if($rangresult = $db->query($rsql))
+                                    {
+                                        $rangs_number = $rangresult->num_rows;
+                                        if($rangs_number == 1)
+                                        {
+                                        
+                                            $drsql = "UPDATE `admins_db` SET `Rang_strong`='2' WHERE Email = '$suemail'";
+                                             
+                                            $db->query($drsql);
+                                        }
+                                        else
+                                        {
+                                            $drsql = "INSERT INTO `admins_db`(`Email`, `Rang_strong`) VALUES ('$suemail','2')";
+                                             
+                                            $db->query($drsql);
+                                        }
+                                        $rangresult->close();
+                                    }
+                                }
+                                if($_POST['radio_rangs'] == 3)
+                                {
+                                    
+
+                                    if($rangresult = $db->query($rsql))
+                                    {
+                                        $rangs_number = $rangresult->num_rows;
+                                        if($rangs_number == 1)
+                                        {
+                                        
+                                            $drsql = "UPDATE `admins_db` SET `Rang_strong`='3' WHERE Email = '$suemail'";
+                                             
+                                            $db->query($drsql);
+                                        }
+                                        else
+                                        {
+                                            $drsql = "INSERT INTO `admins_db`(`Email`, `Rang_strong`) VALUES ('$suemail','3')";
+                                             
+                                            $db->query($drsql);
+                                        }
+                                        $rangresult->close();
+                                    }
+                                }
+
+                                
+
+                            }
+
+
+
+
                             echo '<head> <title>Profil '.$Uname . ' ' .$Usurname.'</title></head>';
                             $sql = "SELECT * FROM admins_db WHERE Email = '$suemail'";
 
@@ -185,6 +290,45 @@
                             echo '<input name="ban_user_id" type="hidden" value="'.$Uid .'">';
                             echo '<input name="ban_user_email" type="hidden" value="'.$suemail .'">';
                             echo '</form>'; 
+
+                            echo '<form name="user_control_form" action="profil_user.php?author_id='.$Uid.'" method="post">';
+                            
+                          
+                            if($_SESSION['Rangs'] == 3 && $Uid != $_SESSION['id'])
+                            {
+                                if($Urangs != 4)
+                                {
+                                    echo '<input onclick="showRangs()" class="button_user" name="show_rangs_button" type="button" value="Set rangs">';
+                                    echo '<div id="contener_radio_rangs">';
+                                        echo '<div id="contener_radio_user">';
+                                            echo '<input id="radio_user" name="radio_rangs" type="hidden" value="0">';
+                                            echo '<label id="user_label"></label>';
+                                        echo '</div>';
+                                        echo '<div id="contener_radio_mod">';
+                                            echo '<input id="radio_mod" name="radio_rangs" type="hidden" value="1">';
+                                            echo '<label id="mod_label"></label>';
+                                        echo '</div>';
+                                        echo '<div id="contener_radio_admin">';
+                                            echo '<input id="radio_admin" name="radio_rangs" type="hidden" value="2">';
+                                            echo '<label id="admin_label"></label>';
+                                        echo '</div>';
+                                        echo '<div id="contener_radio_hadmin">';
+                                            echo '<input id="radio_hadmin" name="radio_rangs" type="hidden" value="3">';
+                                            echo '<label id="hadmin_label"></label>';
+                                        echo '</div>';
+
+                                    echo '</div>';
+
+                                    echo '<input id ="rangs_button"class="button_user" name="save_rangs_button" type="hidden" value="Save rangs">';
+                                }
+                            }
+ 
+
+                             
+                            echo '</form>'; 
+
+
+
                             $db->close();
                         }
 
@@ -218,7 +362,7 @@
 
             </div>
 
-            
+            <script src="scriptrangs.js?<?=filemtime("scriptrangs.js")?>"></script>
         </div>
     </body>
 </html>

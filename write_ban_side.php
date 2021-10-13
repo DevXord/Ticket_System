@@ -31,7 +31,7 @@
         <meta charset="UTF-8" />
         <title>Write Ticket</title>
         <!-- <link rel="stylesheet" type="text/css" href="write_tickets_style.css" /> -->
-        <link href="write_tickets_style.css?<?=filemtime("write_tickets_style.css")?>" rel="stylesheet" type="text/css" />
+        <link href="write_ban_style.css?<?=filemtime("write_ban_style.css")?>" rel="stylesheet" type="text/css" />
 
         <link rel="icon" href="images\Favicon\side_icon.ico">
         <meta name="description" content="Ticket System" />
@@ -99,7 +99,7 @@
                                 if($insertres = $db->query($sql))   
                                 {
                                     
-                                    header("location: profil_side.php");
+                                    header("location: profil_user.php?author_id=".$bannedid."");
                                      
                                 }
                                 
@@ -125,16 +125,16 @@
                     <?php
                     $s = $_GET["ban_user_id"];
                     echo '<form action="write_ban_side.php" method="get">';
-                        echo '<div id="write_tickets_contener">';
-                            echo '<label class="label_text">Enter a reason for the ban:</label>';
-                            echo '<input id="title_input" type="text" name="ban_reason" maxlength="50">';
-                            echo '<input type="hidden" name="ban_user_id" value="'.$s.'">';
-                            echo '<input id="send_text_input" type="submit" value="Send">';
-                        echo '</div>';
-                   echo  '</form>';
-                echo '</div>';
-                   ?>
-
+                            echo '<div id="write_tickets_contener">';
+                                echo '<label class="label_text">Enter a reason for the ban:</label>';
+                                echo '<input id="title_input" type="text" name="ban_reason" maxlength="50">';
+                                echo '<input type="hidden" name="ban_user_id" value="'.$s.'">';
+                                echo '<input id="send_text_input" type="submit" value="Send">';
+                            echo '</div>';
+                    echo  '</form>';
+               
+                    ?>
+                </div>'
                     
             </div>
 

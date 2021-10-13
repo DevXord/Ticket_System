@@ -16,7 +16,8 @@
 body{
 
     width: 1250px;
-    min-height: 670px;
+    min-height: 770px;
+    height: auto;
     background-image: url("images/tail.png");
     background-repeat: repeat-y;
     background-size: 100%;
@@ -86,6 +87,7 @@ body{
     flex-wrap: nowrap;
     flex-direction: row;
     justify-content: space-between;
+  
 }
 
 .label_class{
@@ -93,8 +95,10 @@ body{
     width: 95%;
     height: 100%;
     background-color: rgb(66, 65, 65);
-    line-height: 50px;
+ 
     border: 3px solid grey;
+    text-decoration: none;
+    color:white;
 }
 
 
@@ -104,15 +108,19 @@ body{
 
 #button_contener{
 
-    display: inline-block;
-    margin: auto auto;
-    margin-left: 150px;
-    
-    padding-bottom: 25px;
-     
-    
+  
+    height: 50px;
+    width: 100%;
+    margin-bottom: 25px;
+ 
+    display: inline-flex;  
+    justify-content: space-around; 
 
 
+}
+#radio_form_contener{
+    margin-top: 15px;
+    text-align: center;
 }
 .button_ticket{
 
@@ -147,8 +155,7 @@ body{
     color: white;
     font-weight: bolder;
     border-radius: 20px;
-    margin-left: 550px;
-    margin-right: 5px;
+  
     text-align: center;
    
  
@@ -218,110 +225,81 @@ body{
     
 }
  
-#user_check{
-    width: 5px;
-    margin-left: 40px;
-    text-align: center;
-   
-   
-}
-#user_id{
-    width: 15px;
-    text-shadow: 2px 2px black;
-    margin-left: 100px;
 
-    
+
+#user_status_close{color:red;}
+#user_status_open{color:rgb(23, 112, 50);}
+#user_status_ans{color:rgb(201, 230, 41);}
+
+
+#image_user_in_list{
+    height: 50px;
+    width: 50px;
+    border-radius: 50px;
 }
 #contener_image{
 
-    margin-left: 70px;
+    height: auto;
+    width: 100px;
+    margin: 0 auto;
+    display: inline-flex;
+    flex-direction: row;
    
-
-}
-
-
-#user_name_ticket{
-    width: 50px;
-   
-    cursor: pointer;
-}
-
-#image_user_in_list{
-    height: 40px;
-  
-    border-radius: 25px;
-   
-}
-
-#name_label{
     
-    text-decoration: none;
-    color:white;
-    text-shadow: 2px 2px black;
-    cursor: pointer;
-    margin-top:5px ;
+ 
 }
-#surname_label{
-
-    text-decoration: none;
-    color:white;
-    text-shadow: 2px 2px black;
-    cursor: pointer;
-    margin-right:5px ;
-}
-#email_label{
-    
-    font-size: 12px;
-    color:grey;
-    text-shadow: 2px 2px black;
- }
-
  
 .label_class_in_list{
-
-    margin: auto 0;
-    
   
-    
-    
+    justify-items: start;
+    text-shadow: 1px 2px black;
+     
 }
-#user_ticket{
-  
-   
+ 
+#email_label{
+    font-size: 13px;
+    color:rgb(155, 151, 151);
+ 
+}
+
+
+
+#contener_checkbox{
+    
     height: auto;
-    width: 20px;
-    color:white;
-    text-decoration: none;
-    display: flex;
-    margin-left: 15px;
-
-    background-color: rgba(0, 0, 0, 0);
-    border: 0px 0px rgba(0, 0, 0, 0);
-    border-radius: 20px;
-    text-shadow: 2px 2px black;
-    cursor: pointer;
-    
+    width: 100px;
+    margin: auto auto;
 }
-
-
-#user_date{
-  
-   
-    margin-left: 125px;
-     
- 
-    text-shadow: 2px 2px black;  
+#contener_ticid{
     
-    
-  
-     
+    height: auto;
+    width: 100px;
+    margin: auto auto;
+    color:white
 }
-
-
-#user_status{
+#contener_date{
+    height: auto;
+    width: 100px;
+    margin: auto auto;
+    color:white
+}
+#contener_title{
     
-    margin-left:50px;
- 
+    height: auto;
+    width: 100px;
+    margin: auto auto;
+}
+#contener_status{
+    
+    height: auto;
+    width: 100px;
+    margin: auto auto;
+}
+#contener_priority{
+    
+    height: auto;
+    width: 100px;
+    margin: auto auto;
 }
 
  
@@ -375,7 +353,7 @@ body{
 }
 
 #contener{
-    height: 100%;
+    height: auto;
 }
 
 
@@ -385,7 +363,7 @@ body{
     font-size: 15px;
     min-height: 550px;
     width: 100%;
-    height: 100%;
+    height: auto;
     font-weight: bolder;
     box-shadow: 15px 20px 50px rgba(0, 0, 0, 0.5);
     border:3px solid rgb(255, 255, 255);

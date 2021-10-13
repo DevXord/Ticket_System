@@ -58,7 +58,7 @@
                
                 $aem;$themstat;
                 $tid = $_GET['id_theme'];
-
+                $_GET['id_theme'] = NULL;
                 require_once "connect_mysql.php";
                 $db = @mysqli_connect($host , $username, $userpassword, $namedb);
 
@@ -67,6 +67,28 @@
                     echo '<br><div id="error_contener"> Warning: Database not connected!</div><br>';
                 else
                 {
+
+                    if(isset($_POST['submit_edit_button']))
+                    {
+                       if(isset($_POST['send_edit_text']) && !empty($_POST['send_edit_text']))
+                       {
+                           $editValue = $_POST['send_edit_text'];
+                           $lastValue =  $_POST['edit_value'];
+                           if($_POST['edit_value'] !=  $_POST['send_edit_text'])
+                           {
+                                $priorsql = "UPDATE `ticket_db` SET `Value`='$editValue' WHERE ID='$tid'";
+                                $db->query($priorsql);
+                                $datesecond = time(); 
+                                $nowDate = date('Y-m-d', $datesecond);
+                                $wrid = $_SESSION['id'];
+                                $editsql = "INSERT INTO `edit_db`( `Writter_ID`, `Thema_ID`, `Edit_value`, `Date_edit`) VALUES ('$wrid','$tid',' $lastValue','$nowDate')";
+                                $db->query($editsql);
+
+                                
+                           }
+                       }
+                    }
+                    
                     if(!empty($_POST['send_text']) && isset($_POST['send_text']))
                     {
                         $wid = $_SESSION['id'];
@@ -76,10 +98,39 @@
                         $textval = $_POST['send_text'];
 
                         $umsgsql = "INSERT INTO `message_db` (`Writter_ID`, `Thema_ID`, `Date_added`, `Value`) VALUES ('$wid','$tid','$nowDate','$textval')";
-                         
-                        $db->query($umsgsql);
-
                         
+                        $db->query($umsgsql);
+                        if($_SESSION['Rangs'] >= 1)
+                        {
+                            $db->query("UPDATE `ticket_db` SET `Status`='2' WHERE ID='$tid'");
+                            $sendresult = $db->query("SELECT * FROM `ticket_db` WHERE ID='$tid'");
+                            $send_num =  $sendresult->num_rows;
+                            // if($send_num == 1)
+                            
+                            //     $data = $sendresult->fetch_assoc();
+                            //     $to = "". $data['Author_email']."";
+                            //     $subject = "Your ticket: ".$data['Title']."";
+                                
+                            //     $message = "<b>Hello ".$data['Author_name'].".</b> <h1>You have received a new reply in your subject line.</h1><br><h2>Click <a herf='localhost/projects/theme_side.php?id_theme=".$tid."' >here</a> </h2>";
+                               
+                              
+                                
+                            //     $headers =  'MIME-Version: 1.0' . "\r\n"; 
+                            //     $headers .= 'From: Admin<info@devxord.com>' . "\r\n";
+                            //     $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n"; 
+                                
+                            //     $retval = mail ($to,$subject,$message,$headers  );
+                                
+                            //     if( $retval == true ) {
+                            //     echo "Message sent successfully...";
+                            //     }else {
+                            //     echo "Message could not be sent...";
+                            // }
+
+                        }
+                        else
+                            $db->query("UPDATE `ticket_db` SET `Status`='1' WHERE ID='$tid'");
+                             
                     }
                    
        
@@ -116,24 +167,8 @@
                     { 
                         if($_SESSION['Rangs'] >= 1)
                         {
-                            if($_POST['radio_status_form'] == 1)
-                            {
-                                $statrsql = "UPDATE `ticket_db` SET `Status`='1' WHERE ID='$tid'";
-                                 
-                                
-                                $db->query($statrsql);
-
-                                
-                            }
-                            elseif($_POST['radio_status_form'] == 2)
-                            {
-                                $statrsql = "UPDATE `ticket_db` SET `Status`='2' WHERE ID='$tid'";
-                                 
-                                
-                                $db->query($statrsql);
-                              
-                            }
-                            elseif($_POST['radio_status_form'] == 3)
+                         
+                            if($_POST['radio_status_form'] == 3)
                             {
                                 $statrsql = "UPDATE `ticket_db` SET `Status`='0' WHERE ID='$tid'";
                                  
@@ -176,10 +211,6 @@
                         if($urs == 1)
                         {   
                         
-                            // $dataq['Join_Date'];
-                            // $dataq['Images_url'];
-                            // $dataq['Online'];
-                            // $dataq['ID'];
                             $dataq = $queryt->fetch_assoc();
                            
                             $uid = $dataq['ID'];
@@ -228,7 +259,7 @@
     
                                     echo '<div id = "profil_information">';
                                         // $uid;
-                                    
+                                       
                                         echo '<input  name="author_id"  type="hidden" value="'.$uid.'" /> ';
 
                                         switch($urangs)
@@ -299,7 +330,7 @@
                                             echo '<label id="label_status_close">Close</label>';
                                             break;
                                         case 1;
-                                            echo '<label id="label_status_open">Open</label>';
+                                            echo '<label id="label_status_open">Expectancy</label>';
                                             break;
                                         case 2;
                                             echo '<label id="label_status_answered">Answered</label>';
@@ -321,22 +352,59 @@
                                             break;
     
                                     }
+
                                 echo '</div>';
-                
+                                   
+                               
+                   
                                 echo '<div id = "thema_settings_contener">';
-                                    echo ''.$data["Value"].'';
-                                  echo '</div>';
+                                    echo '<form id="edit_form" action="theme_side.php?id_theme='.$tid.'" method="post">';
+                                        echo '<textarea id="text_edit_message" type="hidden" maxlength="325" name="send_edit_text" >'.$data["Value"].'</textarea>';
+                                        echo '<label id="label_thema_value">'.$data["Value"].'</label>';
+                                        echo '<input name="edit_value" type="hidden" value="'.$data["Value"].'"/>';
+                                        echo '<input name="submit_edit_button" type="submit" id="submit_edits_button" value="Save"/>';
+                                        
+                                    echo '</div>';
+                                  echo '</form>';
+                                    if($themstat != 0)
+                                        echo '<input name="edit_button" type="button" id="edits_button" onclick="showeditthema()" value="Edit"/>';
+                                    if($_SESSION['Rangs'] == 3)
+                                    {
+                                        $usid = $_SESSION['id'];
+                                        $editsql = "SELECT * FROM edit_db WHERE Writter_ID = '$usid' ORDER BY ID DESC";
+                                        if($editresult = $db->query($editsql))
+                                        {
+                                            $edit_number = $editresult->num_rows;
+                                            if($edit_number >= 1)
+                                            {
+                                                foreach ($editresult as $item) {
+                                                   
+                                                    echo '<div id = "thema_settings_contener">';
+                                        
+                                                    echo '<label id="label_thema_value">Edited: '.$item["Date_edit"].'</label><br><br>';
+                                                    echo '<label id="label_thema_value">'.$item["Edit_value"].'</label>';
+                                                
+
+
+                                                    echo '</div>';
+                                                }
+                                                 
+                                            }
+                                        }
+                                            
+                                         
+                                    }
                              echo '</div>';
                 
                             echo '</div>';
-                            
+                           
 
                         }
                         $result->close();
                     }
 
                    
-                    $msgsql = "SELECT * FROM message_db WHERE Thema_ID = '$tid'";
+                    $msgsql = "SELECT * FROM message_db WHERE Thema_ID = '$tid' ORDER BY ID DESC";
                       
                      
                             
@@ -451,17 +519,28 @@
                                 }
 
 
+
+
+                    
+
                                     echo '</div>';
-                                                
+
                                     echo '<div id = "settings_contener">';
-                                        
+                                    
                 
                                         echo '<div id = "message_settings_contener">';
                                         
-                                                echo ''.$item['Value'].'';
-                
+                                                 echo '<label id="label_message_value">'.$item["Value"].'</label>';
+                                            echo '<input name="edit_value" type="hidden" value="'.$item["Value"].'"/>';
+                                               
                                         echo '</div>';
-                                    echo '</div>';
+                                       
+                                        
+                                   
+                                   
+                                     echo '</div>';
+
+
                 
                                 echo '</div>';
 
@@ -479,55 +558,7 @@
                  
                     
 
-                    if($themstat == 1)
-                    {
-                        
-                       
-                        echo '<div id = "write_message_contener">';
-                            
-                            echo '<form  name="send_message_forms"  action="theme_side.php?id_theme='.$tid.'" method="post">';
-                                echo '<div id = "write_message_contener">';
-                                    echo '<div id = "message_contener">';
-                                        echo '<textarea id="text_message" type="text" maxlength="325" name="send_text"></textarea>';
-
-                                            if($_SESSION['Rangs'] >= 1)
-                                            {
-                                                echo '<div id = "radius_contener">';
-                                                    echo '<label>Priority:</label> ';
-                                                    echo '<div id = "radius_center_contener">';
-                                                    echo '<input class="radio_priority_message" type="radio"  value="1" name="radio_priority_form"/>';
-                                                    echo '<label for"radio_priority_form">Low</label> ';
-                                                    echo '<input class="radio_priority_message" type="radio"  value="2" name="radio_priority_form"/>';
-                                                    echo '<label for"radio_priority_form">Medium</label> ';
-                                                    echo '<input class="radio_priority_message" type="radio" value="3"  name="radio_priority_form"/>';
-                                                    echo '<label for"radio_priority_form">High</label> ';
-                                                    echo '</div>';
-
-                                                    echo '<label>Status:</label> ';
-                                                    echo '<div id = "radius_center_contener">';
-                                                    echo '<input  class="radio_status_message" type="radio" value="1"   name="radio_status_form"/>';
-                                                    echo '<label for"radio_status_form">Open</label> ';
-                                                    echo '<input  class="radio_status_message" type="radio" value="2"  name="radio_status_form"/>';
-                                                    echo '<label for"radio_status_form">Answered</label> ';
-                                                    echo '<input class="radio_status_message" type="radio"  value="3" name="radio_status_form"/>';
-                                                    echo '<label for"radio_status_form">Close</label> ';
-                                                    echo '</div>';
-                                                echo '</div>';
-                                            }
-
-                                    
-                                        
-                                    echo '</div>';
-                                    echo '<input id="button_message" type="submit" value="Send" name="send_button"/>';
-                                    echo '<input name="id_theme" value="'.$tid.'" type="hidden">';
-                                echo '</div>';
-                            echo '</form>';
-                    
-                   
-        
-                        echo '</div>';
-                    }
-                    if($themstat == 2 && $_SESSION['Rangs'] >= 2)
+                    if($themstat == 2 || ($themstat == 1 && $_SESSION['Rangs'] >= 2))
                     {
 
                          
@@ -553,10 +584,6 @@
 
                                                     echo '<label>Status:</label> ';
                                                     echo '<div id = "radius_center_contener">';
-                                                    echo '<input  class="radio_status_message" type="radio"  value="1"  name="radio_status_form"/>';
-                                                    echo '<label for"radio_status_form">Open</label> ';
-                                                    echo '<input  class="radio_status_message" type="radio" value="2"  name="radio_status_form"/>';
-                                                    echo '<label for"radio_status_form">Answered</label> ';
                                                     echo '<input class="radio_status_message" type="radio"  value="3" name="radio_status_form"/>';
                                                     echo '<label for"radio_status_form">Close</label> ';
                                                     echo '</div>';
@@ -575,14 +602,15 @@
         
                         echo '</div>';
                     }
-
-                 
+                   
+                    echo '</div>';
                     $db->close();
                 }
                 
                 
            
             ?>
+            <script src="editscript.js?<?=filemtime("editscript.js")?>"></script>
         </div>
 
         <div id="footer">

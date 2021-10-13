@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 11 Paź 2021, 17:16
+-- Czas generowania: 13 Paź 2021, 16:54
 -- Wersja serwera: 10.4.21-MariaDB
 -- Wersja PHP: 8.0.10
 
@@ -127,10 +127,10 @@ CREATE TABLE `users_db` (
 --
 
 INSERT INTO `users_db` (`ID`, `Name`, `Surname`, `Email`, `Password`, `Join_Date`, `Images_url`, `Online`) VALUES
-(1, 'root', 'root', 'root@root.com', 'xxxxxx', '2021-10-09', 'IMG-1-PROFILPHOTO.png', 0),
-(2, 'Admin', 'Admin', 'admin@admin.com', 'xxxxxx', '2021-10-09', '', 0),
-(3, 'Moder', 'Moderator', 'moderator@moderator.com', 'xxxxxx', '2021-10-09', '', 0),
-(4, 'Jacek', 'Soplica', 'jsoplica@gmail.com', 'xxxxxx', '2021-10-09', '', 0);
+(1, 'root', 'root', 'root@root.com', 'xxxxxx', '2021-10-13', '', 0),
+(2, 'Moder', 'Moderator', 'moderator@moderator.com', 'xxxxxx', '2021-10-13', '', 0),
+(3, 'Admin', 'Admin', 'admin@admin.com', 'xxxxxx', '2021-10-13', '', 0),
+(4, 'Jacek', 'Soplica', 'jspolica@gmail.com', 'xxxxxx', '2021-10-13', '', 0);
 
 --
 -- Indeksy dla zrzutów tabel

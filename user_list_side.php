@@ -29,7 +29,7 @@
 <html lang="pl">
     <head>
         <meta charset="UTF-8" />
-        <title>Write Ticket</title>
+        <title>Profils</title>
         <!-- <link rel="stylesheet" type="text/css" href="write_tickets_style.css" /> -->
         <link href="user_list_style.css?<?=filemtime("user_list_style.css")?>" rel="stylesheet" type="text/css" />
 
