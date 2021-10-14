@@ -439,7 +439,7 @@
                                                 echo '</form>';
                                                 echo '</div>';
                                             }
-                                        if($inarchive == false)
+                                        if($inarchive == false && $_SESSION['Rangs'] == 3)
                                         {
                                              
                                             echo '<form id="archive_form" action="theme_side.php?id_theme='.$tid.'" method="post">';
