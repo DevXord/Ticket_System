@@ -450,10 +450,11 @@
 
                                     if($themstat != 0 && $inarchive == false)
                                         echo '<input name="edit_button" type="button" id="edits_button" onclick="showeditthema()" value="Edit"/>';
-                                    if($_SESSION['Rangs'] == 3)
+                                    if($_SESSION['Rangs'] >= 2)
                                     {
                                         $usid = $_SESSION['id'];
-                                        $editsql = "SELECT * FROM edit_db WHERE Writter_ID = '$usid' ORDER BY ID DESC";
+                                        
+                                        $editsql = "SELECT * FROM edit_db WHERE Thema_ID = '$tid' ORDER BY ID DESC";
                                         if($editresult = $db->query($editsql))
                                         {
                                             $edit_number = $editresult->num_rows;
