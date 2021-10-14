@@ -41,9 +41,12 @@
                         }
                      
                         if($_SESSION['Rangs'] >= 2)
+                        {
                             echo' <a id="admin_look_all" href="user_list_side.php"><img class="image_header_icon" title="User list side" alt="Go to user list side icon" src="images/icon_link/profils.png" ></a>';
                    
-                  
+                      
+                            echo' <a id="admin_look_all" href="archive_side.php"><img class="image_header_icon" title="Archive list side" alt="Go to archive list side icon" src="images/icon_link/archive.png" ></a>';
+                        }
                
                     
                     ?>
@@ -56,7 +59,7 @@
             <div id="main">
             <?php      
                
-                $aem;$themstat;
+                $aem;$themstat;$inarchive=false;
                 $tid = $_GET['id_theme'];
                 $_GET['id_theme'] = NULL;
                 require_once "connect_mysql.php";
@@ -67,6 +70,48 @@
                     echo '<br><div id="error_contener"> Warning: Database not connected!</div><br>';
                 else
                 {
+
+
+                    if(isset($_POST['submit_archive_button']))
+                    {
+                        $copysql = "SELECT * FROM `ticket_db` WHERE ID='$tid'";
+                        if($copyresult = $db->query($copysql))
+                        {
+                            $copy_numer = $copyresult->num_rows;
+
+                            
+                            if($copy_numer == 1)
+                            {
+                                $data = $copyresult->fetch_assoc();
+
+                                
+
+                                $copyAdd = $data['Date_added'];	
+                                $copyTitle = $data['Title'];	
+                                $copyAuthorID = $data['Author_id'];	
+                                $copyAuthorName = $data['Author_name'];	
+                                $copyAuthorSurname = $data['Author_surname'];	
+                                $copyAuthorEmail = $data['Author_email'];	
+                                $copyStatus = $data['Status'];	
+                                $copyPriority = $data['Priority'];	
+                                $copyValue = $data['Value'];
+
+                                
+                                $delsql = "DELETE FROM `ticket_db` WHERE ID='$tid'";
+                                $db->query($delsql);
+
+                                $insql = "INSERT INTO `archive_db`(`ID`,`Date_added`, `Title`, `Author_id`, `Author_name`, `Author_surname`, `Author_email`, `Status`, `Priority`, `Value`)  VALUES ('$tid','$copyAdd','$copyTitle','$copyAuthorID','$copyAuthorName','$copyAuthorSurname','$copyAuthorEmail','0','$copyPriority','$copyValue')";
+                                $db->query($insql);
+                               
+
+
+                            }
+
+
+
+                            $copyresult->close();
+                        }
+                    }
 
                     if(isset($_POST['submit_edit_button']))
                     {
@@ -179,9 +224,10 @@
                         }
                     }
 
-                    $sql = "SELECT * FROM ticket_db WHERE ID = '$tid'";
                   
-                            
+                    $sql = "SELECT * FROM ticket_db WHERE ID = '$tid'";
+              
+
                     if($resultr = $db->query($sql))
                     {
                         $users_number = $resultr->num_rows;
@@ -196,11 +242,30 @@
                         }
                         else
                         {
+                            $asql = "SELECT * FROM archive_db WHERE ID = '$tid'";
+                            if($aresult = $db->query($asql))
+                            {
+                                $archive_number = $aresult->num_rows;
+                                if($archive_number == 1)
+                                {
+                                    $data = $aresult->fetch_assoc();
+                                    $aem = $data['Author_email'];
+                                    $themstat = $data['Status'];
+                                    echo '<title>' .$data["Title"] .' </title>';
+                               
+                                    $sql = "SELECT * FROM archive_db WHERE ID = '$tid'";  
+            
+                                    $inarchive = true;
 
-                            header('location: profil_side.php');
+                                }
+                                else
+                                    header('location: profil_side.php');
+                                $aresult->close();
+                            }
                         }
-                        $resultr->close();
+                         
                     }
+
                     $sql2 = "SELECT * FROM users_db WHERE Email = '$aem'";
                   
                     if($queryt = $db->query($sql2))
@@ -247,61 +312,62 @@
                                 $banquery->close(); 
                             }
                             echo '<div id = "option_contener">';
-                            echo '<div id = "profil_contener">';
+                                echo '<div id = "profil_contener">';
                                 
-                                echo '<form  name="send_form" id="user_name_ticket" action="profil_user.php" method="get">';
-                                    echo '<div id="profil_image_contener">';
-                                        if(!empty($uimageurl))
-                                            echo '<input id = "profil_image" type="image" src="User_profils\\'.$uid.'\\'.$uimageurl.'" alt="User image go to profil" />';
-                                        else
-                                            echo '<input id = "profil_image" type="image" src="User_profils\default_profil\default.png"  alt="User image go to profil" /> ';
-                                    echo '</div>';
-    
-                                    echo '<div id = "profil_information">';
-                                        // $uid;
-                                       
-                                        echo '<input  name="author_id"  type="hidden" value="'.$uid.'" /> ';
+                                    echo '<form  name="send_form" id="user_name_ticket" action="profil_user.php" method="get">';
+                                        echo '<div id="profil_image_contener">';
+                                            if(!empty($uimageurl))
+                                                echo '<input id = "profil_image" type="image" src="User_profils\\'.$uid.'\\'.$uimageurl.'" alt="User image go to profil" />';
+                                            else
+                                                echo '<input id = "profil_image" type="image" src="User_profils\default_profil\default.png"  alt="User image go to profil" /> ';
+                                        echo '</div>';
+        
+                                        echo '<div id = "profil_information">';
+                                            // $uid;
+                                        
+                                            echo '<input  name="author_id"  type="hidden" value="'.$uid.'" /> ';
 
-                                        switch($urangs)
-                                        {
+                                            switch($urangs)
+                                            {
+                                            
+                                                case 0: 
+                                                    echo  ' <label id="user_name_user_label">'. $uname." ".$usurname.'</label>';
+                                                    echo  " <label id='rang_style_user'>User</label>";
+                                                    break;
+                                                case 1: 
+                                                    echo  ' <label id="user_name_moderator_label">'. $uname." ".$usurname.'</label>';
+                                                    echo  " <label id='rang_style_moderator'>Moderator</label>";
+                                                    break;
+                                                case 2: 
+                                                    echo  ' <label id="user_name_admin_label">'. $uname." ".$usurname.'</label>';
+                                                    echo  " <label id='rang_style_admin'>Administrator</label>";
+                                                    break;
+                                                case 3: 
+                                                    echo  ' <label id="user_name_hadmin_label">'. $uname." ".$usurname.'</label>';
+                                                    echo  " <label id='rang_style_headadmin'>Head Administrator</label>";
+                                                    break;
+                                                case 4: 
+                                                    echo  ' <label id="user_name_hadmin_label">'. $uname." ".$usurname.'</label>';
+                                                    echo  " <label id='rang_style_headadmin'>Banned</label>";
+                                                    break;
+                                            
+                                            
+                                            }
+                                    
+                                            echo "<label>Status:</label>";
+                                            
                                         
-                                            case 0: 
-                                                echo  ' <label id="user_name_user_label">'. $uname." ".$usurname.'</label>';
-                                                echo  " <label id='rang_style_user'>User</label>";
-                                                break;
-                                            case 1: 
-                                                echo  ' <label id="user_name_moderator_label">'. $uname." ".$usurname.'</label>';
-                                                echo  " <label id='rang_style_moderator'>Moderator</label>";
-                                                break;
-                                            case 2: 
-                                                echo  ' <label id="user_name_admin_label">'. $uname." ".$usurname.'</label>';
-                                                echo  " <label id='rang_style_admin'>Administrator</label>";
-                                                break;
-                                            case 3: 
-                                                echo  ' <label id="user_name_hadmin_label">'. $uname." ".$usurname.'</label>';
-                                                echo  " <label id='rang_style_headadmin'>Head Administrator</label>";
-                                                break;
-                                            case 4: 
-                                                echo  ' <label id="user_name_hadmin_label">'. $uname." ".$usurname.'</label>';
-                                                echo  " <label id='rang_style_headadmin'>Banned</label>";
-                                                break;
-                                        
-                                        
-                                        }
-                                
-                                        echo "<label>Status:</label>";
-                                        
-                                       
-                                        if($ustatus == 1)
-                                            echo  " <label id='user_online'>ON-LINE</label>";
-                                        else
-                                            echo  " <label id='user_offline'>OFF-LINE</label>";
-                
+                                            if($ustatus == 1)
+                                                echo  " <label id='user_online'>ON-LINE</label>";
+                                            else
+                                                echo  " <label id='user_offline'>OFF-LINE</label>";
+                    
                                        
                                       
                             
-                                    echo '</div>';
-                                echo '</form>';
+                                        echo '</div>';
+                                    echo '</form>';
+                                
                             echo '</div>';
 
                         }
@@ -354,19 +420,35 @@
                                     }
 
                                 echo '</div>';
-                                   
-                               
+                                 
+                                        if($inarchive == true)
+                                        {
+                                            echo '<div id = "thema_settings_contener">';
+                                                echo '<label id="label_thema_value">'.$data["Value"].'</label>';
+                                            echo '</div>';
+                                        }
+                                        else
+                                        {
                    
-                                echo '<div id = "thema_settings_contener">';
-                                    echo '<form id="edit_form" action="theme_side.php?id_theme='.$tid.'" method="post">';
-                                        echo '<textarea id="text_edit_message" type="hidden" maxlength="325" name="send_edit_text" >'.$data["Value"].'</textarea>';
-                                        echo '<label id="label_thema_value">'.$data["Value"].'</label>';
-                                        echo '<input name="edit_value" type="hidden" value="'.$data["Value"].'"/>';
-                                        echo '<input name="submit_edit_button" type="submit" id="submit_edits_button" value="Save"/>';
-                                        
-                                    echo '</div>';
-                                  echo '</form>';
-                                    if($themstat != 0)
+                                            echo '<div id = "thema_settings_contener">';
+                                                echo '<form id="edit_form" action="theme_side.php?id_theme='.$tid.'" method="post">';
+                                                    echo '<textarea id="text_edit_message" type="hidden" maxlength="325" name="send_edit_text" >'.$data["Value"].'</textarea>';
+                                                    echo '<label id="label_thema_value">'.$data["Value"].'</label>';
+                                                    echo '<input name="edit_value" type="hidden" value="'.$data["Value"].'"/>';
+                                                    echo '<input name="submit_edit_button" type="submit" id="submit_edits_button" value="Save"/>';
+                                                echo '</form>';
+                                                echo '</div>';
+                                            }
+                                        if($inarchive == false)
+                                        {
+                                             
+                                            echo '<form id="archive_form" action="theme_side.php?id_theme='.$tid.'" method="post">';
+                                            
+                                                echo '<input name="submit_archive_button" type="submit" id="submit_archive_button" value="Go to archive"/>';
+                                            echo '</form>';
+                                        }
+
+                                    if($themstat != 0 && $inarchive == false)
                                         echo '<input name="edit_button" type="button" id="edits_button" onclick="showeditthema()" value="Edit"/>';
                                     if($_SESSION['Rangs'] == 3)
                                     {
@@ -521,7 +603,7 @@
 
 
 
-                    
+                      
 
                                     echo '</div>';
 
@@ -558,59 +640,59 @@
                  
                     
 
-                    if($themstat == 2 || ($themstat == 1 && $_SESSION['Rangs'] >= 2))
-                    {
+                        if(($themstat == 2 || ($themstat == 1 && $_SESSION['Rangs'] >= 2)) && $inarchive != true)
+                        {
 
-                         
-                        echo '<div id = "write_message_contener">';
                             
-                            echo '<form  name="send_message_forms"  action="theme_side.php?id_theme='.$tid.'" method="post">';
-                                echo '<div id = "write_message_contener">';
-                                    echo '<div id = "message_contener">';
-                                        echo '<textarea id="text_message" type="text" maxlength="325" name="send_text"></textarea>';
+                            echo '<div id = "write_message_contener">';
+                                
+                                echo '<form  name="send_message_forms"  action="theme_side.php?id_theme='.$tid.'" method="post">';
+                                    echo '<div id = "write_message_contener">';
+                                        echo '<div id = "message_contener">';
+                                            echo '<textarea id="text_message" type="text" maxlength="325" name="send_text"></textarea>';
 
-                                            if($_SESSION['Rangs'] >= 1)
-                                            {
-                                                echo '<div id = "radius_contener">';
-                                                    echo '<label>Priority:</label> ';
-                                                    echo '<div id = "radius_center_contener">';
-                                                    echo '<input class="radio_priority_message" type="radio"  value="1" name="radio_priority_form"/>';
-                                                    echo '<label for"radio_priority_form">Low</label> ';
-                                                    echo '<input class="radio_priority_message" type="radio"  value="2" name="radio_priority_form"/>';
-                                                    echo '<label for"radio_priority_form">Medium</label> ';
-                                                    echo '<input class="radio_priority_message" type="radio" value="3"  name="radio_priority_form"/>';
-                                                    echo '<label for"radio_priority_form">High</label> ';
-                                                    echo '</div>';
-
-                                                    echo '<label>Status:</label> ';
-                                                    echo '<div id = "radius_center_contener">';
-                                                    echo '<input class="radio_status_message" type="radio"  value="3" name="radio_status_form"/>';
-                                                    echo '<label for"radio_status_form">Close</label> ';
-                                                    echo '</div>';
-                                                echo '</div>';
-                                            }
-
-                                    
                                         
+                                                    echo '<div id = "radius_contener">';
+                                                        echo '<label>Priority:</label> ';
+                                                        echo '<div id = "radius_center_contener">';
+                                                        echo '<input class="radio_priority_message" type="radio"  value="1" name="radio_priority_form"/>';
+                                                        echo '<label for"radio_priority_form">Low</label> ';
+                                                        echo '<input class="radio_priority_message" type="radio"  value="2" name="radio_priority_form"/>';
+                                                        echo '<label for"radio_priority_form">Medium</label> ';
+                                                        echo '<input class="radio_priority_message" type="radio" value="3"  name="radio_priority_form"/>';
+                                                        echo '<label for"radio_priority_form">High</label> ';
+                                                        echo '</div>';
+
+                                                        echo '<label>Status:</label> ';
+                                                        echo '<div id = "radius_center_contener">';
+                                                        echo '<input class="radio_status_message" type="radio"  value="3" name="radio_status_form"/>';
+                                                        echo '<label for"radio_status_form">Close</label> ';
+                                                        echo '</div>';
+                                                    echo '</div>';
+                                                
+
+                                        
+                                            
+                                        echo '</div>';
+                                        echo '<input id="button_message" type="submit" value="Send" name="send_button"/>';
+                                        echo '<input name="id_theme" value="'.$tid.'" type="hidden">';
                                     echo '</div>';
-                                    echo '<input id="button_message" type="submit" value="Send" name="send_button"/>';
-                                    echo '<input name="id_theme" value="'.$tid.'" type="hidden">';
-                                echo '</div>';
-                            echo '</form>';
+                                echo '</form>';
+                        
                     
-                   
-        
-                        echo '</div>';
-                    }
-                   
+            
+                            echo '</div>';
+                        }
+                    
                     echo '</div>';
                     $db->close();
                 }
-                
-                
+                if($inarchive == false )
+                    echo '<script src="editscript.js?<?=filemtime("editscript.js")?>"></script>';
            
             ?>
-            <script src="editscript.js?<?=filemtime("editscript.js")?>"></script>
+            
+          
         </div>
 
         <div id="footer">

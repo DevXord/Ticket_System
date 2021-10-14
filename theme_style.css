@@ -46,7 +46,7 @@ body{
 }
 .image_header_icon:hover{
     height: 40px;
-    width: 40px;
+    width: 35px;
     transition-delay: 0.1s;
     transition-duration: 1s;
 
@@ -259,7 +259,7 @@ body{
 }
 
 
-
+#submit_archive_button,
 #submit_edits_msg_button,
 #edits_msq_button,
 #submit_edits_button,
@@ -275,7 +275,7 @@ body{
     border-radius: 20px;
  
 }
-
+#submit_archive_button:hover,
 #submit_edits_msg_button:hover,
 #edits_msq_button:hover,
 #submit_edits_button:hover,
@@ -294,6 +294,14 @@ body{
     margin: auto 0;
    
 }
+#submit_archive_button{
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 25px;
+}
+
+
+
 .radio_priority_message{
     margin: 20px 5px;
 }

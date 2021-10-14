@@ -55,10 +55,12 @@
                             echo "<a id='user_go_profil' href='profil_side.php'><img class='image_header_icon' title='Profil side' alt='Go back to profil icon' src='$pathi'></a>";
                         }
                         if($_SESSION['Rangs'] >= 2)
+                        {
                             echo' <a id="admin_look_all" href="user_list_side.php"><img class="image_header_icon" title="User list side" alt="Go to user list side icon" src="images/icon_link/profils.png" ></a>';
                    
-                  
-                    
+                            echo' <a id="admin_look_all" href="archive_side.php"><img class="image_header_icon" title="Archive list side" alt="Go to archive list side icon" src="images/icon_link/archive.png" ></a>';
+
+                        }
                     ?>
                     
                     <a id="user_go_tickets" href="ticket_side.php"><img class="image_header_icon" title="Ticket side" alt="Go to tickets icon" src="images/icon_link/tickets.png"></a>

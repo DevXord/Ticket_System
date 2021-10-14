@@ -53,6 +53,10 @@
 
 
                             echo "<a id='user_go_profil' href='profil_side.php'><img class='image_header_icon' title='Profil side' alt='Go back to profil icon' src='$pathi'></a>";
+                       
+                            if($_SESSION['Rangs'] >= 2)
+                                echo' <a id="admin_look_all" href="archive_side.php"><img class="image_header_icon" title="Archive list side" alt="Go to archive list side icon" src="images/icon_link/archive.png" ></a>';
+
                         }
                      
                   

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 13 Paź 2021, 16:54
+-- Czas generowania: 14 Paź 2021, 11:54
 -- Wersja serwera: 10.4.21-MariaDB
 -- Wersja PHP: 8.0.10
 
@@ -41,6 +41,25 @@ INSERT INTO `admins_db` (`ID`, `Email`, `Rang_strong`) VALUES
 (1, 'root@root.com', 3),
 (2, 'moderator@moderator.com', 1),
 (3, 'admin@admin.com', 2);
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `archive_db`
+--
+
+CREATE TABLE `archive_db` (
+  `ID` int(11) NOT NULL,
+  `Date_added` varchar(30) NOT NULL,
+  `Title` varchar(54) NOT NULL,
+  `Author_id` int(11) NOT NULL,
+  `Author_name` varchar(24) NOT NULL,
+  `Author_surname` varchar(24) NOT NULL,
+  `Author_email` varchar(30) NOT NULL,
+  `Status` int(11) NOT NULL,
+  `Priority` int(11) NOT NULL,
+  `Value` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -127,7 +146,7 @@ CREATE TABLE `users_db` (
 --
 
 INSERT INTO `users_db` (`ID`, `Name`, `Surname`, `Email`, `Password`, `Join_Date`, `Images_url`, `Online`) VALUES
-(1, 'root', 'root', 'root@root.com', 'xxxxxx', '2021-10-13', '', 0),
+(1, 'root', 'root', 'root@root.com', 'xxxxxx', '2021-10-13', '', 1),
 (2, 'Moder', 'Moderator', 'moderator@moderator.com', 'xxxxxx', '2021-10-13', '', 0),
 (3, 'Admin', 'Admin', 'admin@admin.com', 'xxxxxx', '2021-10-13', '', 0),
 (4, 'Jacek', 'Soplica', 'jspolica@gmail.com', 'xxxxxx', '2021-10-13', '', 0);
@@ -140,6 +159,12 @@ INSERT INTO `users_db` (`ID`, `Name`, `Surname`, `Email`, `Password`, `Join_Date
 -- Indeksy dla tabeli `admins_db`
 --
 ALTER TABLE `admins_db`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Indeksy dla tabeli `archive_db`
+--
+ALTER TABLE `archive_db`
   ADD PRIMARY KEY (`ID`);
 
 --
@@ -181,6 +206,12 @@ ALTER TABLE `users_db`
 --
 ALTER TABLE `admins_db`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT dla tabeli `archive_db`
+--
+ALTER TABLE `archive_db`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT dla tabeli `banned_db`

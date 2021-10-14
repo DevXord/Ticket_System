@@ -65,7 +65,7 @@ body{
 }
 .image_header_icon:hover{
     height: 40px;
-    width: 40px;
+    width: 35px;
     transition-delay: 0.1s;
     transition-duration: 1s;
 

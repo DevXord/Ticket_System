@@ -19,9 +19,9 @@
 <html lang="pl">
     <head>
         <meta charset="UTF-8" />
-        <title>Ticket List</title>
+        <title>Archive List</title>
         <!-- <link rel="stylesheet" type="text/css" href="ticket_style.css" /> -->
-        <link href="ticket_style.css?<?=filemtime("ticket_style.css")?>" rel="stylesheet" type="text/css" />
+        <link href="archive_style.css?<?=filemtime("archive_style.css")?>" rel="stylesheet" type="text/css" />
 
         <link rel="icon" href="images\Favicon\side_icon.ico">
         <meta name="description" content="Ticket System" />
@@ -33,6 +33,8 @@
 
             <div id="header">
                 <div id="link_contener">
+
+ 
                     <?php
                         if(empty($_SESSION['img']))
                             echo '<a id="user_go_profil" href="profil_side.php"><img class="image_header_icon" title="Profil side" alt="Go back to profil icon" src="User_profils\default_profil\default.png"></a>';
@@ -48,13 +50,13 @@
                         {
                             echo' <a id="admin_look_all" href="user_list_side.php"><img class="image_header_icon" title="User list side" alt="Go to user list side icon" src="images/icon_link/profils.png" ></a>';
                    
-                            echo' <a id="admin_look_all" href="archive_side.php"><img class="image_header_icon" title="Archive list side" alt="Go to archive list side icon" src="images/icon_link/archive.png" ></a>';
-
+ 
                         }
                   
                     
                     ?>
-                    
+                    <a id="user_go_ticket" href="ticket_side.php"><img class="image_header_icon" title="Ticket side" alt="Go to Ticket side icon" src="images/icon_link/tickets.png" ></a>
+
                     <a class="user_logout" href="logout.php"> <img class="image_header_icon" title="Log out" alt="Log out icon"src="images/icon_link/logout.png"></a>
                 </div>
             </div>
@@ -62,8 +64,9 @@
 
 
             <div id="main">
-                
+            <label id="archiv_label">Archive</label>
                 <div id="ticket_conener">
+                   
                     <div id="ticket_page">
 
 
@@ -71,7 +74,7 @@
 
                         <?php 
 
-                        echo '<form id="form_select"  action="ticket_side.php" method="post">';
+                        echo '<form id="form_select"  action="archive_side.php" method="post">';
                      
 
                         echo '</form>'; 
@@ -125,23 +128,23 @@
                                 if(isset($_POST['click_id']))
                                     if( $_SESSION['cliid'] == true) 
                                     {
-                                        $usql = "SELECT * FROM `ticket_db` ORDER BY ID DESC";
+                                        $usql = "SELECT * FROM `archive_db` ORDER BY ID DESC";
                                         $_SESSION['cliid'] = false;
                                     }
                                     else
                                     {
-                                        $usql = "SELECT * FROM `ticket_db` ORDER BY ID";
+                                        $usql = "SELECT * FROM `archive_db` ORDER BY ID";
                                         $_SESSION['cliid'] = true;
                                     }
                                 elseif(isset($_POST['click_user']))
                                     if( $_SESSION['aunam'] == true) 
                                     {
-                                        $usql = "SELECT * FROM `ticket_db` ORDER BY Author_name DESC";
+                                        $usql = "SELECT * FROM `archive_db` ORDER BY Author_name DESC";
                                         $_SESSION['aunam'] = false;
                                     }
                                     else
                                     {
-                                        $usql = "SELECT * FROM `ticket_db` ORDER BY Author_name";
+                                        $usql = "SELECT * FROM `archive_db` ORDER BY Author_name";
                                         $_SESSION['aunam'] = true;
                                
                                        
@@ -149,47 +152,47 @@
                                 elseif(isset($_POST['click_tit']))
                                     if( $_SESSION['tits'] == true) 
                                     {
-                                        $usql = "SELECT * FROM `ticket_db` ORDER BY Title DESC";
+                                        $usql = "SELECT * FROM `archive_db` ORDER BY Title DESC";
                                         $_SESSION['tits'] = false;
                                          
                                     }
                                     else
                                     {
-                                        $usql = "SELECT * FROM `ticket_db` ORDER BY Title";
+                                        $usql = "SELECT * FROM `archive_db` ORDER BY Title";
                                         $_SESSION['tits'] = true;
                                         
                                     }
                                 elseif(isset($_POST['click_date']))
                                     if($_SESSION['datas'] == true) 
                                     {
-                                        $usql = "SELECT * FROM `ticket_db` ORDER BY Date_added DESC";
+                                        $usql = "SELECT * FROM `archive_db` ORDER BY Date_added DESC";
                                         $_SESSION['datas'] = false;
                                     }
                                     else
                                     {
-                                        $usql = "SELECT * FROM `ticket_db` ORDER BY Date_added";
+                                        $usql = "SELECT * FROM `archive_db` ORDER BY Date_added";
                                         $_SESSION['datas'] = true;
                                     }
                                 elseif(isset($_POST['click_ststus']))
                                     if($_SESSION['status'] == true)
                                     {
-                                        $usql = "SELECT * FROM `ticket_db` ORDER BY Status DESC";          
+                                        $usql = "SELECT * FROM `archive_db` ORDER BY Status DESC";          
                                         $_SESSION['status'] = false;
                                     }
                                     else
                                     {
-                                        $usql = "SELECT * FROM `ticket_db` ORDER BY Status"; 
+                                        $usql = "SELECT * FROM `archive_db` ORDER BY Status"; 
                                         $_SESSION['status'] = true;
                                     }
                                 elseif(isset($_POST['click_priorit']))
                                     if($_SESSION['priorit'] == true)
                                     {
-                                        $usql = "SELECT * FROM `ticket_db` ORDER BY Priority DESC"; 
+                                        $usql = "SELECT * FROM `archive_db` ORDER BY Priority DESC"; 
                                         $_SESSION['priorit'] = false;
                                     }
                                     else
                                     {
-                                        $usql = "SELECT * FROM `ticket_db` ORDER BY Priority"; 
+                                        $usql = "SELECT * FROM `archive_db` ORDER BY Priority"; 
                                         $_SESSION['priorit'] = true;
                                     }
                                 elseif(isset($_POST['radio_user']))
@@ -199,25 +202,25 @@
                                     if($_POST['radio_user'] == 1)
                                     {
                                         if(!empty($serch))
-                                            $usql = "SELECT * FROM `ticket_db` WHERE Author_name LIKE '$serch%'";
+                                            $usql = "SELECT * FROM `archive_db` WHERE Author_name LIKE '$serch%'";
                                         else
-                                            $usql = "SELECT * FROM `ticket_db` ORDER BY Author_name DESC";
+                                            $usql = "SELECT * FROM `archive_db` ORDER BY Author_name DESC";
 
                                     }
                                     if($_POST['radio_user'] == 2)
                                     {
                                         if(!empty($serch))
-                                            $usql = "SELECT * FROM `ticket_db` WHERE Title LIKE '$serch%'";
+                                            $usql = "SELECT * FROM `archive_db` WHERE Title LIKE '$serch%'";
                                         else
-                                            $usql = "SELECT * FROM `ticket_db` ORDER BY Title DESC";
+                                            $usql = "SELECT * FROM `archive_db` ORDER BY Title DESC";
 
                                     }
                                     if($_POST['radio_user'] == 3)
                                     {
                                         if(!empty($serch))
-                                            $usql = "SELECT * FROM `ticket_db` WHERE ID = '$serch'";
+                                            $usql = "SELECT * FROM `archive_db` WHERE ID = '$serch'";
                                         else
-                                            $usql = "SELECT * FROM `ticket_db` ORDER BY ID DESC";
+                                            $usql = "SELECT * FROM `archive_db` ORDER BY ID DESC";
 
                                     }
 
@@ -227,9 +230,9 @@
                                 else
                                 {
                                     if($_SESSION['Rangs'] >= 1)
-                                        $usql = "SELECT * FROM `ticket_db` ORDER BY ID DESC";
+                                        $usql = "SELECT * FROM `archive_db` ORDER BY ID DESC";
                                     else
-                                        $usql = "SELECT * FROM `ticket_db` WHERE Author_email = '$aemail' ORDER BY ID DESC";
+                                        $usql = "SELECT * FROM `archive_db` WHERE Author_email = '$aemail' ORDER BY ID DESC";
                             
                                 }
                                 
@@ -277,7 +280,7 @@
                                     {
                                         
                                         $delid=$item["ID"];
-                                        $delsql = "DELETE FROM `ticket_db` WHERE ID = '$delid'";
+                                        $delsql = "DELETE FROM `archive_db` WHERE ID = '$delid'";
                                         $db->query($delsql);
                                  
                                         unset($listtickets[$item['ID']]);
@@ -286,7 +289,7 @@
                                 }
  
  
-                                echo '<form id="delete_form" action="ticket_side.php" method="post">';
+                                echo '<form id="delete_form" action="archive_side.php" method="post">';
                                            
                                 echo '</form>';
                                 foreach ($listtickets  as $item) {
@@ -354,22 +357,21 @@
         
                                             echo '<div id="contener_title">';
 
-                                                $s = "'Thema-".$item['ID']."'";
+                                            $s = "'Thema-".$item['ID']."'";
+                                            
+                                            echo '<form name ='. $s.' action="theme_side.php" method="get">';
                                                 
-                                                echo '<form name ='. $s.' action="theme_side.php" method="get">';
-                                                    
-                                            
-                                                    echo '<input name="id_theme" type="hidden" value="'. $item["ID"].'">';
-                            
-                                                    echo '<a id = "user_ticket" onclick="document.forms['.$s.'].submit();">'.$item["Title"].'</a>';
-                                                echo '</form>';
-                                            
-                                            echo '</div>';
-                                            echo '<div id="contener_date">';
-                                                echo '<label class="label_class_in_list"  id="user_date">'.$item["Date_added"].'</label>';
                                         
-                                            echo '</div>';
-                                   
+                                                echo '<input name="id_theme" type="hidden" value="'. $item["ID"].'">';
+                        
+                                                echo '<a id = "user_ticket" onclick="document.forms['.$s.'].submit();">'.$item["Title"].'</a>';
+                                            echo '</form>';
+                                        
+                                        echo '</div>';
+                                        echo '<div id="contener_date">';
+                                            echo '<label class="label_class_in_list"  id="user_date">'.$item["Date_added"].'</label>';
+                                    
+                                        echo '</div>';
                                      
                                         echo '<div id="contener_status">';
                                          switch($item["Status"])
@@ -430,16 +432,14 @@
                 
 
                 <div id="button_contener"> 
-                    <div id="button_add_contener"> 
-                        <a href="write_tickets_side.php"> <input class="button_ticket" id="add_ticket_bt" type="button" value="Add new ticket" title="Added" alt="Add new ticket" name="add_ticket_button"></a>
-                    </div>
+                 
                 
                 
                     <div id="button_delete_contener"> 
                         <button class="button_ticket" id="delete_ticket_bt" form="delete_form"  type="submit">Delete ticket</button>
-                    </div>
+                    </div> 
                     
-                        <form herf="#" action="ticket_side.php" name="serch_form" method="post"> 
+                        <form herf="#" action="archive_side.php" name="serch_form" method="post"> 
                             <div id="serch_form_contener">   
                                 <input class="text_ticket" id="search_ticket_tx" type="search" placeholder="Write a keyword" name="search_ticket_text">
                             </div>
