@@ -427,31 +427,33 @@
                    
                 </div>
 
-                
+                <?php
 
-                <div id="button_contener"> 
-                    <div id="button_add_contener"> 
-                        <a href="write_tickets_side.php"> <input class="button_ticket" id="add_ticket_bt" type="button" value="Add new ticket" title="Added" alt="Add new ticket" name="add_ticket_button"></a>
-                    </div>
+                echo '<div id="button_contener">';
+                    echo '<div id="button_add_contener">';
+                        if($_SESSION['Rangs'] == 0)
+                            echo '<a href="write_tickets_side.php"> <input class="button_ticket" id="add_ticket_bt" type="button" value="Add new ticket" title="Added" alt="Add new ticket" name="add_ticket_button"></a>';
+                    echo '</div>';
                 
                 
-                    <div id="button_delete_contener"> 
-                        <button class="button_ticket" id="delete_ticket_bt" form="delete_form"  type="submit">Delete ticket</button>
-                    </div>
+                    echo '<div id="button_delete_contener"> ';
+                        if($_SESSION['Rangs'] >= 1)
+                            echo '<button class="button_ticket" id="delete_ticket_bt" form="delete_form"  type="submit">Delete ticket</button>';
+                    echo '</div>';
                     
-                        <form herf="#" action="ticket_side.php" name="serch_form" method="post"> 
-                            <div id="serch_form_contener">   
-                                <input class="text_ticket" id="search_ticket_tx" type="search" placeholder="Write a keyword" name="search_ticket_text">
-                            </div>
-                            <div id="radio_form_contener"> 
-                                <input class="radio_ticket" value="1" id="search_user_radio"type="radio" name="radio_user">  <label for="radio_user">User</label>
-                                <input class="radio_ticket" value="2" id="search_tickets_radio"type="radio" name="radio_user"> <label for="radio_user">Title</label>
-                                <input class="radio_ticket" value="3" id="search_tickets_radio"type="radio" name="radio_user"> <label for="radio_user">ID</label>
-                            </div>
-                        </form>
+                        echo '<form herf="#" action="ticket_side.php" name="serch_form" method="post"> ';
+                            echo '<div id="serch_form_contener"> ';  
+                                echo '<input class="text_ticket" id="search_ticket_tx" type="search" placeholder="Write a keyword" name="search_ticket_text">';
+                            echo '</div>';
+                            echo '<div id="radio_form_contener"> ';
+                                echo '<input class="radio_ticket" value="1" id="search_user_radio"type="radio" name="radio_user">  <label for="radio_user">User</label>';
+                                echo '<input class="radio_ticket" value="2" id="search_tickets_radio"type="radio" name="radio_user"> <label for="radio_user">Title</label>';
+                                echo '<input class="radio_ticket" value="3" id="search_tickets_radio"type="radio" name="radio_user"> <label for="radio_user">ID</label>';
+                            echo '</div>';
+                        echo '</form>';
                     
-                </div>
-                
+                echo '</div>';
+                ?>
              
             </div>
 
